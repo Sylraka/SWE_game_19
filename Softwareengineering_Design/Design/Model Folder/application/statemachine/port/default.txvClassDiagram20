@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjpwmn6vo-wpgbuc">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<reference referencedUin="jdt:e_class:src:application.statemachine.port.Observer">
+			<property name="bounds" value="5,5,110,97"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.statemachine.port.StateMachine">
+			<property name="bounds" value="205,-4,200,157"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.statemachine.port.StateMachinePort">
+			<property name="bounds" value="375,235,200,97"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.statemachine.port.Subject">
+			<property name="bounds" value="35,195,110,117"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.statemachine.port.SubjectPort">
+			<property name="bounds" value="175,195,129,97"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

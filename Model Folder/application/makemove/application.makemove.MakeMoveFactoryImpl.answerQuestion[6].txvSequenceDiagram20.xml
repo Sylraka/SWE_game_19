@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="Vam8ynkjnsy93ay-m8irs6">
+		<property name="$metaclass" value="SequenceDiagram20"/>
+		<property name="$referencedInteractionUin" value="design:node:::-yrgd8ejnsy92r2vuli6s"/>
+		<property name="$name" value="application.makemove.MakeMoveFactoryImpl.answerQuestion[6]"/>
+		<property name="__options" value="option.nlayout.recursive=true"/>
+	</view>
+	<link uin="ieje0rjnsy93azty82v7">
+		<property name="$metaclass" value="SequenceDiagram20_LinkToInteraction"/>
+		<participant referencedUin="design:view:::Vam8ynkjnsy93ay-m8irs6" role="Client"></participant>
+		<participant referencedUin="design:node:::-yrgd8ejnsy92r2vuli6s" role="Supplier"></participant>
+	</link>
+</nodeSet>

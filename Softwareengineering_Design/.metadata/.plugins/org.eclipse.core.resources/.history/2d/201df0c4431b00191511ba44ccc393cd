@@ -1,0 +1,104 @@
+package application.Applikationsschicht.Logik;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import application.statemachine.impl.StateMachineImpl;
+import application.statemachine.port.StateMachine;
+import application.statemachine.port.StateMachine.State;
+import application.statemachine.port.StateMachine.State.S;;
+
+public class verwaltungImpl {
+	private Spieler[] spieler;
+	private Spieler aktuellerSpieler;
+
+	private Figur[] figuren;
+	
+
+	private Map<Figur, Integer> moeglicheSpielzuege;
+
+	private int augenzahl;
+
+	StateMachine stateMachine;
+
+	public void wuerfeln(Spieler aktuellerSpieler) {
+		Figur[] figurenDesSpielers;
+		
+		this.augenzahl = getAugenzahl();
+
+		this.aktuellerSpieler = aktuellerSpieler;
+
+		figurenDesSpielers = (getFiguren(aktuellerSpieler));
+
+	}
+
+	private int getAugenzahl() {
+		return (int) (Math.random() * 6) + 1;
+	}
+
+	private Figur[] getFiguren(Spieler aktuellerSpieler) {
+		int index = aktuellerSpieler.getSpielerNummer() * 3;
+		Figur[] figuren = { this.figuren[index], this.figuren[index + 1], this.figuren[index + 2] };
+
+		return figuren;
+	}
+
+	private boolean istEineFigurImSpiel(Figur[] figuren) {
+		for (Figur figur : figuren) {
+			if (!figur.isHeimatsfeld())
+				return true;
+		}
+		return false;
+
+	}
+
+	private void berechneMoeglicheSpielzuege(Figur[] figurenDesSpielers) {
+		for (Figur figur : figurenDesSpielers) {
+			// Wurde das Ende der 48 Felder erreicht, geht es von vorne wieder los
+			this.moeglicheSpielzuege.put(figur, (figur.getPosition() + this.augenzahl) % 48);
+
+		}
+	}
+
+private void entferneUnmoeglicheSchritte() {
+	
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	private void figurnummerEingeben(int figurNummer) {
+
+		int position = getNeuePosition(figurNummer);
+
+		if (istFeldBesetzt(position)) {
+			this.stateMachine.setState(S.Frage);
+		} else {
+			setNeuePosition(figurNummer, position);
+			this.stateMachine.setState(S.Initial);
+		}
+
+	}
+
+	private int getNeuePosition(int figurNummer) {
+		return moeglicheSpielzuege.get(figuren[figurNummer]);
+	}
+
+	private boolean istFeldBesetzt(int position) {
+		for (Figur figur : figuren) {
+			if (figur.getPosition() == position) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void setNeuePosition(int figurNummer, int position) {
+		this.figuren[figurNummer].setPosition(position);
+	}
+
+}

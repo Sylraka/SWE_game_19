@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjpckg6wu-573gur">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<reference referencedUin="design:view:::V-jr6xbajpckh0xy5zr245">
+			<property name="bounds" value="5,5,167,131"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V-oyrl70jpckou69-yr9r7e">
+			<property name="bounds" value="200,-4,219,171"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Interface">
+			<property name="bounds" value="191,235,91,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::mejlh8jpckygv1k030to">
+			<property name="bounds" value="162,155,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="label:$name:design:node:::mejlh8jpckygv1k030to">
+				<property name="bounds" value="-56,30,132,20"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Interface1">
+			<property name="bounds" value="39,235,100,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhjpclhc62m28jwu">
+			<property name="bounds" value="457,-4,149,151"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.GUI">
+			<property name="bounds" value="457,174,200,94"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Verwaltung">
+			<property name="bounds" value="815,75,190,174"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:design.Verwaltung:spielfeld">
+				<property name="sourceAnchor" value="820,205"/>
+				<property name="targetAnchor" value="197,460"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Spieler">
+			<property name="bounds" value="575,415,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Spielfigur">
+			<property name="bounds" value="97,435,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Interface2">
+			<property name="bounds" value="438,273,100,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::ur4fcajpjoke05-a43y8b">
+			<property name="bounds" value="24,155,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="label:$name:design:node:::ur4fcajpjoke05-a43y8b">
+				<property name="bounds" value="-14,30,49,20"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::ns6lfljpjokme7-wz5z9p">
+			<property name="bounds" value="409,273,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="label:$name:design:node:::ns6lfljpjokme7-wz5z9p">
+				<property name="bounds" value="-19,30,59,20"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:view:::V-b8dyjijpjr1ye8-ds0hug">
+			<property name="bounds" value="695,-4,326,91"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

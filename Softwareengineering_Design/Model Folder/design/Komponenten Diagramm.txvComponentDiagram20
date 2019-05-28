@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V-oyrl70jpckou69-yr9r7e">
+		<property name="$metaclass" value="ComponentDiagram20"/>
+		<property name="$name" value="Komponenten Diagramm"/>
+		<reference referencedUin="design:node:::ba089njpcksq70-ttpakp">
+			<property name="bounds" value="215,215,661,285"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:node:::ba089njpckvbtvi7ep4i:ba089njpcksq70-ttpakp">
+				<property name="bounds" value="396,57,207,78"/>
+				<property name="location_set_by_user" value="true"/>
+				<property name="bounds_setted_by_user" value="true"/>
+			</reference>
+			<reference referencedUin="design:node:::-vedwtdjpjooqli-9wakit:ba089njpcksq70-ttpakp">
+				<property name="bounds" value="510,-7,14,14"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$port20InplaceEditing:design:node:::-vedwtdjpjooqli-9wakit:ba089njpcksq70-ttpakp">
+					<property name="bounds" value="-20,18,54,20"/>
+					<property name="location_set_by_user" value="true"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpjop7st-79z3gi:-vedwtdjpjooqli-9wakit:ba089njpcksq70-ttpakp">
+					<property name="sourceAnchor" value="744,214"/>
+					<property name="targetAnchor" value="801,175"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpjop1th-zb5lrb:-vedwtdjpjooqli-9wakit:ba089njpcksq70-ttpakp">
+					<property name="sourceAnchor" value="730,214"/>
+					<property name="targetAnchor" value="673,175"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::-amcqg9jpckxmecwj7dpv:ba089njpcksq70-ttpakp">
+				<property name="bounds" value="137,0,20,20"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$name:design:node:::-amcqg9jpckxmecwj7dpv:ba089njpcksq70-ttpakp">
+					<property name="bounds" value="-23,-25,66,20"/>
+					<property name="location_set_by_user" value="true"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::-vedwtdjpckszmd-w74ec2:ba089njpcksq70-ttpakp">
+				<property name="bounds" value="182,-7,14,14"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$port20InplaceEditing:design:node:::-vedwtdjpckszmd-w74ec2:ba089njpcksq70-ttpakp">
+					<property name="bounds" value="-27,20,88,20"/>
+					<property name="location_set_by_user" value="true"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpckxupb-8ujhib:-vedwtdjpckszmd-w74ec2:ba089njpcksq70-ttpakp">
+					<property name="sourceAnchor" value="403,227"/>
+					<property name="targetAnchor" value="376,266"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpjogizy7g9ouu:-vedwtdjpckszmd-w74ec2:ba089njpcksq70-ttpakp">
+					<property name="sourceAnchor" value="403,216"/>
+					<property name="targetAnchor" value="407,159"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::ba089njpckt8qh-ped2i3:ba089njpcksq70-ttpakp">
+				<property name="bounds" value="56,55,181,81"/>
+				<property name="location_set_by_user" value="true"/>
+				<property name="bounds_setted_by_user" value="true"/>
+				<reference referencedUin="design:link:::ieje0rjpcl0o0ct3skbe:ba089njpckt8qh-ped2i3:ba089njpcksq70-ttpakp">
+					<property name="sourceAnchor" value="370,320"/>
+					<property name="targetAnchor" value="370,285"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::ba089njpckt1p0gjnnra">
+			<property name="bounds" value="495,55,146,66"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rjpckwp4mc9nqe:ba089njpckt1p0gjnnra">
+				<property name="sourceAnchor" value="420,78"/>
+				<property name="targetAnchor" value="351,78"/>
+				<property name="bendpoints" value=""/>
+			</reference>
+			<reference referencedUin="design:node:::-vedwtdjpjoo457-3pmm4z:ba089njpckt1p0gjnnra">
+				<property name="bounds" value="139,40,14,14"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$port20InplaceEditing:design:node:::-vedwtdjpjoo457-3pmm4z:ba089njpckt1p0gjnnra">
+					<property name="bounds" value="19,-8,10,20"/>
+					<property name="location_set_by_user" value="true"/>
+				</reference>
+				<reference referencedUin="design:link:::wn7u22jpjooatk2ub85m:-vedwtdjpjoo457-3pmm4z:ba089njpckt1p0gjnnra">
+					<property name="sourceAnchor" value="653,109"/>
+					<property name="targetAnchor" value="800,166"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::-vedwtdjpjojk7g-tan7pa:ba089njpckt1p0gjnnra">
+				<property name="bounds" value="107,59,14,14"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$port20InplaceEditing:design:node:::-vedwtdjpjojk7g-tan7pa:ba089njpckt1p0gjnnra">
+					<property name="bounds" value="2,24,10,20"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpjoktlitierza:-vedwtdjpjojk7g-tan7pa:ba089njpckt1p0gjnnra">
+					<property name="sourceAnchor" value="620,133"/>
+					<property name="targetAnchor" value="657,163"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::-vedwtdjpjof8p2w9v8g5:ba089njpckt1p0gjnnra">
+				<property name="bounds" value="28,59,14,14"/>
+				<property name="location_set_by_user" value="true"/>
+				<reference referencedUin="label:$port20InplaceEditing:design:node:::-vedwtdjpjof8p2w9v8g5:ba089njpckt1p0gjnnra">
+					<property name="bounds" value="2,24,10,20"/>
+				</reference>
+				<reference referencedUin="design:link:::ieje0rjpjofk3e-hf58ck:-vedwtdjpjof8p2w9v8g5:ba089njpckt1p0gjnnra">
+					<property name="sourceAnchor" value="528,127"/>
+					<property name="targetAnchor" value="419,147"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::mejlh8jpckygv1k030to">
+			<property name="bounds" value="395,135,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::mejlh8jpckygv1k030to">
+				<property name="bounds" value="-96,-26,132,20"/>
+				<property name="location_set_by_user" value="true"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::ur4fcajpjoke05-a43y8b">
+			<property name="bounds" value="650,155,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::ur4fcajpjoke05-a43y8b">
+				<property name="bounds" value="-19,30,49,20"/>
+				<property name="location_set_by_user" value="true"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::ns6lfljpjokme7-wz5z9p">
+			<property name="bounds" value="795,155,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::ns6lfljpjokme7-wz5z9p">
+				<property name="bounds" value="-19,30,59,20"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>

@@ -1,0 +1,58 @@
+package application.Applikationsschicht.Logik;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import application.statemachine.impl.StateMachineImpl;;
+
+public class verwaltungImpl {
+	private Spieler[] spieler;
+	private Spieler aktuellerSpieler;
+
+	private Figur[] figuren;
+	private Map<Figur, Integer> moeglicheSpielzuege;
+
+	private int augenzahl;
+
+	public void wuerfeln(Spieler aktuellerSpieler) {
+		this.aktuellerSpieler = aktuellerSpieler;
+		augenzahl = getAugenzahl();
+	}
+
+	private int getAugenzahl() {
+		return (int) (Math.random() * 6) + 1;
+	}
+
+	private Figur[] getFiguren(Spieler aktuellerSpieler) {
+		int index = aktuellerSpieler.getSpielerNummer() * 3;
+		Figur[] figuren = { this.figuren[index], this.figuren[index + 1], this.figuren[index + 2] };
+
+		return figuren;
+	}
+
+	private boolean istEineFigurImSpiel(Figur[] figuren) {
+		for (Figur figur : figuren) {
+			if (!figur.isHeimatsfeld())
+				return true;
+		}
+		return false;
+		
+	}
+
+	private void figurnummerEingeben(int nummer) {
+
+		
+		
+		int position = 
+	}
+	
+	private int getNeuePosition(int figurNummer) {
+		for (Figur figur : figuren) {
+			if (figur.getFigurNummer() == figurNummer) {
+				Figur aktuelleFigur = figur;
+			}
+		}
+		return moeglicheSpielzuege.get(aktuelleFigur);
+	}
+
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhj8yy6poc1qgd4j">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="__options" value="option.nlayout.recursive=true"/>
+		<reference referencedUin="jdt:e_class:src:myClub.management.ManagementFactory">
+			<property name="bounds" value="360,-4,200,137"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:myClub.management.ManagementFactory:FACTORY">
+				<property name="sourceAnchor" value="565,134"/>
+				<property name="targetAnchor" value="561,138"/>
+				<property name="bendpoints" value="594,134,594,167,561,167"/>
+				<property name="smooth_bendpoints" value="594,134,594,167,561,167"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:myClub.management.ManagementFactoryImpl">
+			<property name="bounds" value="360,207,200,434"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_impl:src:myClub.management.ManagementFactoryImpl:ManagementFactory">
+				<property name="sourceAnchor" value="465,212"/>
+				<property name="targetAnchor" value="465,138"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhj8yy6poh-lcu03d">
+			<property name="bounds" value="174,-4,144,88"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhj8yy6pp9-3yif07">
+			<property name="bounds" value="5,5,172,148"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

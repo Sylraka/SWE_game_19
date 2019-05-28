@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjnt1syyh7wa2m7">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="$name" value="MyClassDiagramm"/>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.players.Player">
+			<property name="bounds" value="15,15,382,464"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.players.Player:playerFigures">
+				<property name="sourceAnchor" value="170,484"/>
+				<property name="targetAnchor" value="170,540"/>
+			</reference>
+			<reference referencedUin="property:e_property:jdt=e_class=src=application.makemove.impl.players.Player:id">
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.players.Player:knowledgeLevels">
+				<property name="sourceAnchor" value="402,366"/>
+				<property name="targetAnchor" value="460,366"/>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.players.Player:color">
+				<property name="sourceAnchor" value="402,151"/>
+				<property name="targetAnchor" value="460,151"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.players.Colors">
+			<property name="bounds" value="455,15,326,262"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.questions.KnowledgeLevel">
+			<property name="bounds" value="455,315,421,294"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.questions.Question">
+			<property name="bounds" value="455,655,421,221"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.Question:qCategory">
+				<property name="sourceAnchor" value="653,660"/>
+				<property name="targetAnchor" value="653,573"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.questions.QuestionsRepository">
+			<property name="bounds" value="1055,659,521,214"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="collapsedCompartments" value="Property20"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:greenRepository">
+				<property name="sourceAnchor" value="1060,759"/>
+				<property name="targetAnchor" value="881,759"/>
+				<reference referencedUin="label:supplierCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:greenRepository">
+					<property name="bounds" value="921,732,24,24"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:greenRepository">
+					<property name="bounds" value="1018,732,12,24"/>
+				</reference>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:blueRepository">
+				<property name="sourceAnchor" value="1060,767"/>
+				<property name="targetAnchor" value="881,767"/>
+				<reference referencedUin="label:supplierCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:blueRepository">
+					<property name="bounds" value="891,740,24,24"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:blueRepository">
+					<property name="bounds" value="1038,740,12,24"/>
+				</reference>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:yellowRepository">
+				<property name="sourceAnchor" value="1060,743"/>
+				<property name="targetAnchor" value="881,743"/>
+				<reference referencedUin="label:supplierCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:yellowRepository">
+					<property name="bounds" value="891,706,24,24"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:yellowRepository">
+					<property name="bounds" value="978,716,12,24"/>
+				</reference>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:redRepository">
+				<property name="sourceAnchor" value="1060,751"/>
+				<property name="targetAnchor" value="881,751"/>
+				<reference referencedUin="label:supplierCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:redRepository">
+					<property name="bounds" value="951,724,24,24"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:jdt:l_ast:src:application.makemove.impl.questions.QuestionsRepository:redRepository">
+					<property name="bounds" value="998,724,12,24"/>
+				</reference>
+			</reference>
+			<reference referencedUin="jdt:e_method:src:application.makemove.impl.questions.QuestionsRepository.QuestionsRepository:QuestionsRepository">
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.questions.QuestionsService">
+			<property name="bounds" value="915,315,621,294"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsService:qss">
+				<property name="sourceAnchor" value="1541,610"/>
+				<property name="targetAnchor" value="1537,614"/>
+				<property name="bendpoints" value="1570,610,1570,643,1537,643"/>
+				<property name="smooth_bendpoints" value="1570,610,1570,643,1537,643"/>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.questions.QuestionsService:qr">
+				<property name="sourceAnchor" value="1190,614"/>
+				<property name="targetAnchor" value="1190,664"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.Figure">
+			<property name="bounds" value="15,535,401,174"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.impl.MoveOps">
+			<property name="bounds" value="15,735,321,174"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.MoveOps:figureDefender">
+				<property name="sourceAnchor" value="232,740"/>
+				<property name="targetAnchor" value="232,714"/>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.impl.MoveOps:figureAttacker">
+				<property name="sourceAnchor" value="240,740"/>
+				<property name="targetAnchor" value="240,714"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjh7m5hbp-fea38w">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="url" value="element://model:project::SWE_Spiel/design:node:::q74oe7ji1mbmlm-i1dr15"/>
+	</view>
+</nodeSet>

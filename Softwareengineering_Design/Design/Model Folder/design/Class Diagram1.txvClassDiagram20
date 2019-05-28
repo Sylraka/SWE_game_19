@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjpclhc62m28jwu">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="$name" value="Class Diagram1"/>
+		<reference referencedUin="jdt:e_class:src:design.GUI">
+			<property name="bounds" value="575,55,256,138"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Verwaltung">
+			<property name="bounds" value="155,195,261,201"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:design.Verwaltung:spielfeld">
+				<property name="sourceAnchor" value="421,350"/>
+				<property name="targetAnchor" value="980,350"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Spieler">
+			<property name="bounds" value="515,295,275,189"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:design.Spielfigur">
+			<property name="bounds" value="975,295,208,125"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

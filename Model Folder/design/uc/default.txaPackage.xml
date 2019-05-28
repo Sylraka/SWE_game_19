@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="8tlp8wji1m9hf3kxy9jm">
+		<property name="$metaclass" value="Actor20"/>
+		<property name="$name" value="Spieler"/>
+	</node>
+	<node uin="avjl4pji1m9hf3-ublj2m">
+		<property name="$metaclass" value="Actor20"/>
+		<property name="$name" value="GUI"/>
+		<link uin="3qget0ji1m9hf3m5hvn">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::avjl4pji1m9hf3-ublj2m" role="Client"></participant>
+			<participant referencedUin="design:node:::e3sqhaji1m9rfy-wal186:i7mrnyji1m9rfy-1jzb77" role="Supplier"></participant>
+		</link>
+		<link uin="8rhv5bji1m9hf3-7fpfaa">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="clientCardinality" value="1"/>
+			<property name="supplierCardinality" value="2-4"/>
+			<property name="supplierNavigability" value="$supplierNavigable"/>
+			<property name="clientNavigability" value="$clientNavigableExplicitly"/>
+			<participant referencedUin="design:node:::avjl4pji1m9hf3-ublj2m" role="Client"></participant>
+			<participant referencedUin="design:node:::8tlp8wji1m9hf3kxy9jm" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="i7mrnyji1m9rfy-1jzb77">
+		<property name="$metaclass" value="UseCaseClassifier20"/>
+		<property name="$name" value="Logic"/>
+		<node uin="e3sqhaji1m9rfy-wal186">
+			<property name="$metaclass" value="UseCase20"/>
+			<property name="$name" value="MakeMove"/>
+		</node>
+	</node>
+</nodeSet>

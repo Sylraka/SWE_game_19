@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhji1op6sz-khpyxl">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="$name" value="Class Diagram1"/>
+		<reference referencedUin="jdt:e_class:src:design.comp.logic.Class1">
+			<property name="bounds" value="115,55,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.logic.MakeMove.impl.GameManagementImpl">
+			<property name="bounds" value="625,261,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="collapsedCompartments" value="Operation20"/>
+			<reference referencedUin="jdt:e_method:src:application.logic.MakeMove.impl.GameManagementImpl.method1:method1">
+				<property name="bounds" value="64,12,0,0"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.logic.MakeMove.port.GameManagement">
+			<property name="bounds" value="270,137,246,119"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

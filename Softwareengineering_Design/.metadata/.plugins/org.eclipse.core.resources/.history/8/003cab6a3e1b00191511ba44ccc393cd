@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjpcl48ml-1ejzj5">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="__options" value="option.nlayout.recursive=true"/>
+		<reference referencedUin="design:view:::V1hexuhjpcl4khk-aqe11u">
+			<property name="bounds" value="115,395,128,60"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.Applikationsschicht.Logik.Spieler">
+			<property name="bounds" value="211,-4,191,154"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.Applikationsschicht.Logik.Spieler:figuren">
+				<property name="sourceAnchor" value="216,136"/>
+				<property name="targetAnchor" value="216,117"/>
+				<reference referencedUin="label:clientCardinality:jdt:l_ast:src:application.Applikationsschicht.Logik.Spieler:figuren">
+					<property name="bounds" value="219,162,12,24"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:jdt:l_ast:src:application.Applikationsschicht.Logik.Spieler:figuren">
+					<property name="bounds" value="219,105,24,24"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.Applikationsschicht.Logik.Figur">
+			<property name="bounds" value="28,112,184,134"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.Applikationsschicht.Logik.verwaltungImpl">
+			<property name="bounds" value="495,195,200,234"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.Applikationsschicht.Logik.verwaltungImpl:figuren">
+				<property name="sourceAnchor" value="500,225"/>
+				<property name="targetAnchor" value="217,225"/>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.Applikationsschicht.Logik.verwaltungImpl:aktuellerSpieler">
+				<property name="sourceAnchor" value="501,200"/>
+				<property name="targetAnchor" value="407,139"/>
+			</reference>
+			<reference referencedUin="jdt:l_ast:src:application.Applikationsschicht.Logik.verwaltungImpl:spieler">
+				<property name="sourceAnchor" value="506,200"/>
+				<property name="targetAnchor" value="407,137"/>
+			</reference>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.Applikationsschicht.Logik.Class1">
+		</reference>
+	</view>
+</nodeSet>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhjmze8y2d-ezzr66">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="__options" value="option.nlayout.recursive=true"/>
+		<property name="url" value="element://model:project::SWE_Spiel/design:node:::eihklxji1mbmlm9i43io:q74oe7ji1mbmlm-i1dr15"/>
+		<reference referencedUin="jdt:e_class:src:application.makemove.MakeMoveFactory">
+			<property name="bounds" value="285,53,200,137"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_ast:src:application.makemove.MakeMoveFactory:FACTORY">
+				<property name="sourceAnchor" value="490,191"/>
+				<property name="targetAnchor" value="486,195"/>
+				<property name="bendpoints" value="519,191,519,224,486,224"/>
+				<property name="smooth_bendpoints" value="519,191,519,224,486,224"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhjmze8y2riq1qfn">
+			<property name="bounds" value="5,285,219,208"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="jdt:e_class:src:application.makemove.MakeMoveFactoryImpl">
+			<property name="bounds" value="5,5,200,594"/>
+			<property name="location_set_by_user" value="true"/>
+			<reference referencedUin="jdt:l_impl:src:application.makemove.MakeMoveFactoryImpl:MakeMoveFactory">
+				<property name="sourceAnchor" value="210,126"/>
+				<property name="targetAnchor" value="290,126"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhjmze8y4hmvu3yn">
+			<property name="bounds" value="255,225,189,108"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsxusyrbff47u">
+			<property name="bounds" value="504,216,480,91"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsxv97d-4an61h">
+			<property name="bounds" value="504,546,441,91"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsycu0f-7ja1nz">
+			<property name="bounds" value="504,106,457,60"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsyazq6-65b891">
+			<property name="bounds" value="1026,-4,582,60"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsy15ousje2pm">
+			<property name="bounds" value="504,326,447,91"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsy93ay-m8irs6">
+			<property name="bounds" value="504,-4,503,60"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::Vam8ynkjnsy2p0x-wvdyp3">
+			<property name="bounds" value="504,436,480,91"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

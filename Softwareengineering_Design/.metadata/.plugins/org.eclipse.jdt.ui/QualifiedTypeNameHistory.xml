@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="application.Applikationsschicht.Logik.Figur.Figur"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="application.statemachine.port.StateMachine"/>
+<fullyQualifiedTypeName name="application.statemachine.port.StateMachine.State"/>
+<fullyQualifiedTypeName name="application.statemachine.port.StateMachine.State.S"/>
+</qualifiedTypeNameHistroy>

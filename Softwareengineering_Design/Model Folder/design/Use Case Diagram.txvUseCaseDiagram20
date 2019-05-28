@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V-jr6xbajpckh0xy5zr245">
+		<property name="$metaclass" value="UseCaseDiagram20"/>
+		<property name="$name" value="Use Case Diagram"/>
+		<reference referencedUin="design:node:::8bho0jjpckh5puszgdme">
+			<property name="bounds" value="155,295,50,96"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rjpcklna9-p9qio7:8bho0jjpckh5puszgdme">
+				<property name="sourceAnchor" value="187,300"/>
+				<property name="targetAnchor" value="187,216"/>
+				<property name="bendpoints" value=""/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rjpcklrb3-24wg8e:8bho0jjpckh5puszgdme">
+				<property name="sourceAnchor" value="210,338"/>
+				<property name="targetAnchor" value="445,254"/>
+				<property name="bendpoints" value=""/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rjpcklrb3-24wg8e:8bho0jjpckh5puszgdme">
+					<property name="bounds" value="390,244,8,24"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rjpcklrb3-24wg8e:8bho0jjpckh5puszgdme">
+					<property name="bounds" value="219,305,8,24"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::8krugmjpckh8y8xnz517">
+			<property name="bounds" value="315,135,401,261"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:node:::gj7tthjpckhb54vytmf4:8krugmjpckh8y8xnz517">
+				<property name="bounds" value="76,33,233,61"/>
+				<property name="location_set_by_user" value="true"/>
+				<property name="bounds_setted_by_user" value="true"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::8bho0jjpckio0frsazce">
+			<property name="bounds" value="155,115,56,96"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+	</view>
+</nodeSet>
