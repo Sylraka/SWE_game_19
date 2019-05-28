@@ -110,14 +110,14 @@ public class ConsoleIOHandler implements Observer {
 		System.out.println(this.model.getCurrentPlayer().getPlayerName() + " ist am Zug");
 		
 		
-		// unsere states sind: initial, wurf, wahl
+		// unsere states sind: initial, wurf, wahl, evtl end
 		
-		if (currentState == State.S.InitialState) {
-			posKeys = "y - begin round";
-		}
+//		if (currentState == State.S.InitialState) {
+//			posKeys = "y - begin round";
+//		}
 
 		if (currentState == State.S.WurfState) {
-			posKeys = "t - throw";
+			posKeys = "";
 			System.out.println("Tries left: " + this.model.getTriesLeft());
 		}
 
@@ -198,30 +198,32 @@ public class ConsoleIOHandler implements Observer {
 
 		System.out.println("*******Question******");
 	}
-
-	private void printFieldStatus() {
-		System.out.println("*******STATUS******");
-		for (Player pl : this.model.allPlayers()) {
-			System.out.println("\nStatus of player " + pl.getPlayerName());
-			System.out.println("---------------------------------");
-			System.out.print("RED: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.RED).getLvl());
-			System.out.print(", BLUE: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.BLUE).getLvl());
-			System.out.print(", YELLOW: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.YELLOW).getLvl());
-			System.out.print(", GREEN: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.GREEN).getLvl());
-			System.out.println("\n---------------------------------");
-			for (Figure fg : pl.getFigures()) {
-				System.out.format("Figure#%d: position = %d\n", fg.getId(), fg.getPosition());
-			}
-		}
-		System.out.println("*****STATUS*******");
-	}
+	
+//TODO 
+//	private void printFieldStatus() {
+//		System.out.println("*******STATUS******");
+//		for (Player pl : this.model.allPlayers()) {
+//			System.out.println("\nStatus of player " + pl.getPlayerName());
+//			System.out.println("---------------------------------");
+//			System.out.print("RED: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.RED).getLvl());
+//			System.out.print(", BLUE: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.BLUE).getLvl());
+//			System.out.print(", YELLOW: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.YELLOW).getLvl());
+//			System.out.print(", GREEN: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.GREEN).getLvl());
+//			System.out.println("\n---------------------------------");
+//			for (Figure fg : pl.getFigures()) {
+//				System.out.format("Figure#%d: position = %d\n", fg.getId(), fg.getPosition());
+//			}
+//		}
+//		System.out.println("*****STATUS*******");
+//	}
 
 	private void printFigureMap() {
-		System.out.println("*******ALL FIELDS******");
+	//	System.out.println("*******ALL FIELDS******");
+		//TODO ausgabe anpassen: anfrage der felder über den gespeicherten wert in figure.java
 		for (int i = 0; i < 48; i++) {
 			Figure curFig = this.model.getFigureByField(i);
 			if (curFig == null)
-				System.out.format("On the field %d: nothing...\n", i);
+		//		System.out.format("On the field %d: nothing...\n", i);
 			else
 				System.out.format("On the field %d(self->%d): figure#%d (Player#%d)\n", i, curFig.getPosition(), curFig.getId(),
 						curFig.getPlayerId());
