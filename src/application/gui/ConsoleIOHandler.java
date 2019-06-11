@@ -3,8 +3,8 @@ package application.gui;
 import application.makemove.impl.questions.KnowledgeLevel;
 import application.makemove.impl.questions.KnowledgeLevel.QuestionCategories;
 import application.makemove.impl.questions.Question;
-import application.makemove.impl.Figure;
-import application.makemove.impl.players.Player;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
 import application.makemove.impl.MoveOps;
 import application.logic.LogicFactory;
 import application.logic.port.MVCPort;
@@ -119,6 +119,7 @@ public class ConsoleIOHandler implements Observer {
 		if (currentState == State.S.WurfState) {
 			posKeys = "";
 			System.out.println("Wurf: " + (3 - this.model.getTriesLeft()));
+			//TODO variable, die hochzählt für anzahl würfe einführen
 		}
 
 		if (currentState == State.S.WahlState) {
@@ -161,13 +162,13 @@ public class ConsoleIOHandler implements Observer {
 				// Neues Feld is unbesetzt
 				if (mo.figureDefender == null) {
 					System.out.format("Figur %d von Feld (%d) auf Feld %d.\n", 
-							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
+							mo.figureAttacker.getFigurNummer(), mo.figureAttacker.getPosition(), mo.destinationField);
 					
 				// Neues Feld ist von eigener Figur besetzt
 				// TODO: Regelabfrage ob selbst Frage gestellt werden darf
 				} else if (mo.figureDefender.getPlayerId() == mo.figureAttacker.getPlayerId()) {
 					System.out.format("Figur %d von Feld (%d) auf Feld %d.\n", 
-							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
+							mo.figureAttacker.getFigurNummer(), mo.figureAttacker.getPosition(), mo.destinationField);
 				
 				// Neues Feld ist von einer Figur eines Mitspielers besetzt, haben wir nicht umgesetzt
 				} else {
@@ -182,7 +183,7 @@ public class ConsoleIOHandler implements Observer {
 
 					System.out.format(
 							"Figur %d von Feld (%d) auf Feld %d.\n", 
-							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
+							mo.figureAttacker.getFigurNummer(), mo.figureAttacker.getPosition(), mo.destinationField);
 				}
 			}
 		}
@@ -201,10 +202,10 @@ public class ConsoleIOHandler implements Observer {
 	
 //TODO 
 	private void printFieldStatus() {
-		for (Player pl : this.model.allPlayers()) {
+		for (Spieler pl : this.model.allPlayers()) {
 			System.out.println("\n" + pl.getPlayerName() + ":\t");
-			for (Figure fg : pl.getFigures()) {
-				System.out.format("Figur %d: Feld %d\n", fg.getId(), fg.getPosition());
+			for (Figur fg : pl.getFigures()) {
+				System.out.format("Figur %d: Feld %d\n", fg.getFigurNummer(), fg.getPosition());
 			}
 		}
 	}
@@ -212,9 +213,9 @@ public class ConsoleIOHandler implements Observer {
 	private void printFigureMap() {
 		//TODO ausgabe anpassen: anfrage der felder über den gespeicherten wert in figure.java
 		for (int i = 0; i < 48; i++) {
-			Figure curFig = this.model.getFigureByField(i);
+			Figur curFig = this.model.getFigureByField(i);
 			if (curFig != null) {
-				System.out.format("On the field %d(self->%d): figure#%d (Player#%d)\n", i, curFig.getPosition(), curFig.getId(),
+				System.out.format("On the field %d(self->%d): figure#%d (Player#%d)\n", i, curFig.getPosition(), curFig.getFigurNummer(),
 						curFig.getPlayerId());
 		}
 			}

@@ -9,13 +9,13 @@ import com.sun.javafx.application.LauncherImpl;
 
 import application.makemove.MakeMoveFactory;
 import application.makemove.impl.players.Colors;
-import application.makemove.impl.players.Player;
+import application.makemove.impl.players.Spieler;
 
 public class Main {
 	public static void main(String[] args) {
-		List<Player> players = new ArrayList<Player>();
-		players.add(new Player(1, Colors.RED, "Red guy"));
-		players.add(new Player(2, Colors.BLUE, "Blue guy"));
+		List<Spieler> players = new ArrayList<Spieler>();
+		players.add(new Spieler(1, Colors.RED, "Red guy"));
+		players.add(new Spieler(2, Colors.BLUE, "Blue guy"));
 //		players.add(new Player(3, Colors.GREEN, "Green guy"));
 //		players.add(new Player(4, Colors.YELLOW, "Yellow guy"));
 

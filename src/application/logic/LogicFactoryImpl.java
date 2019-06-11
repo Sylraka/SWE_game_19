@@ -9,7 +9,7 @@ import java.util.List;
 
 import application.logic.LogicFactory;
 import application.makemove.MakeMoveFactory;
-import application.makemove.impl.players.Player;
+import application.makemove.impl.players.Spieler;
 import application.makemove.port.SimpleManagerPort;
 import application.statemachine.port.Subject;
 import application.statemachine.port.SubjectPort;
@@ -35,7 +35,7 @@ public class LogicFactoryImpl implements LogicFactory, ManagerPort, MVCPort {
 	}
 
 	@Override
-	public MakeMoveManagement makeMoveManagement(List<Player> players) {
+	public MakeMoveManagement makeMoveManagement(List<Spieler> players) {
 		return this.simpleManagerPort.makeMoveManagement(players);
 	}
 

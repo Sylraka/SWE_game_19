@@ -1,9 +1,7 @@
 package application.makemove.impl;
 
-import application.makemove.impl.questions.KnowledgeLevel.QuestionCategories;
+
 import java.util.Iterator;
-import application.makemove.impl.questions.Question;
-import application.makemove.impl.questions.QuestionsService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -13,32 +11,29 @@ import application.statemachine.port.State;
 import application.statemachine.port.StateMachine;
 import application.statemachine.port.StateMachinePort;
 import application.makemove.port.MakeMoveManagement;
-import application.makemove.impl.players.Player;
-import application.makemove.impl.Figure;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
 
 public class MakeMoveManagementImpl implements MakeMoveManagement {
   private static final int MAX_NUMBER_OF_TRIES = 3;
   private static final int BOARD_SIZE = 48;
   private static final int HOME_POSITION = -1;
   private static final int MOCK_CORRECT_ANSWER = 0;
-  private final List<Player> players;
+  private final List<Spieler> players;
   private StateMachine stateMachine;
 
   private int roundId;
   private int triesLeft;
   private int diceNumber;
-  private Player currentPlayer;
-  private Player winner;
+  private Spieler currentPlayer;
+  private Spieler winner;
 
   //Two maps for quick search
-  private Map<Integer, Figure> figureByField;
+  private Map<Integer, Figur> figureByField;
   private List<MoveOps> moveOpsList;
 
-  private boolean lastQuestionAnswer = false;
-  private boolean isSelfAnswerQuestion = false;
-  private Question currentQuestion;
 
-  public MakeMoveManagementImpl(StateMachinePort stPort, List<Player> players) {
+  public MakeMoveManagementImpl(StateMachinePort stPort, List<Spieler> players) {
     System.out.println("Game started.");
     System.out.println("Number of players: " + players.size());
     this.stateMachine = stPort.stateMachine();
@@ -50,22 +45,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     this.figureByField = new HashMap<>();
     this.moveOpsList = new ArrayList<>();
 
-    //Test: first player is almost profi
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.GREEN);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.GREEN);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.GREEN);
-
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.BLUE);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.BLUE);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.BLUE);
-
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.YELLOW);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.YELLOW);
-
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.RED);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.RED);
-    players.get(0).increaseKnowledgeLevelsByCategory(QuestionCategories.RED);
-
+ 
     initPlayingBoard();
   }
 
@@ -101,77 +81,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     resolveFieldConflicts(mOps.figureAttacker, mOps.figureDefender, mOps.destinationField);
   }
 
-  @Override
-  public void chooseQuestionFromCategory(QuestionCategories qCat) {
-    this.stateMachine.setState(State.S.AnswerQState);
-    currentQuestion = QuestionsService.getInstance().getQuestionRepository().getRandomQuestion(qCat);
-  }
-
-  @Override
-  public void answerQuestion(int answer) {
-    System.out.println("Answering question by answer" + answer);
-    if (answer == MOCK_CORRECT_ANSWER) {
-      this.lastQuestionAnswer = true;
-
-      setFigureNewPosition(this.moveOpsList.get(0).figureAttacker, this.moveOpsList.get(0).destinationField, true);
-
-      if (isSelfAnswerQuestion) {
-        if (!this.currentPlayer.increaseKnowledgeLevelsByCategory(currentQuestion.getCategory())) {
-
-          this.winner = currentPlayer;
-          this.stateMachine.setState(State.S.EndGameState);
-          return;
-        }
-
-        this.stateMachine.setState(State.S.InitialState);
-        prepareForNextRound();
-      } else {
-        if (!getPlayerById(this.moveOpsList.get(0).figureDefender.getPlayerId())
-            .increaseKnowledgeLevelsByCategory(currentQuestion.getCategory())) {
-
-          this.winner = getPlayerById(this.moveOpsList.get(0).figureDefender.getPlayerId());
-          this.stateMachine.setState(State.S.EndGameState);
-          return;
-        }
-
-        applyCascadeResolution(this.moveOpsList.get(0).figureDefender,
-            getPlayerById(this.moveOpsList.get(0).figureDefender.getPlayerId()).getStartField());
-      }
-    } else {
-      this.lastQuestionAnswer = false;
-
-      if (isSelfAnswerQuestion) {
-
-        currentPlayer.decreaseKnowledgeLevelsByCategory(currentQuestion.getCategory());
-        setFigureNewPosition(this.moveOpsList.get(0).figureAttacker, HOME_POSITION, true);
-
-        this.stateMachine.setState(State.S.InitialState);
-        prepareForNextRound();
-      } else {
-
-        getPlayerById(this.moveOpsList.get(0).figureDefender.getPlayerId())
-            .decreaseKnowledgeLevelsByCategory(currentQuestion.getCategory());
-        setFigureNewPosition(this.moveOpsList.get(0).figureDefender, HOME_POSITION, true);
-        this.stateMachine.setState(State.S.IsSelfAnswer);
-      }
-    }
-  }
-
-  @Override
-  public void selfAnswer(boolean isSelfAnswer) {
-    if (isSelfAnswer) {
-
-      isSelfAnswerQuestion = true;
-      this.stateMachine.setState(State.S.AnswerQState);
-    } else {
-
-      isSelfAnswerQuestion = false;
-      setFigureNewPosition(this.moveOpsList.get(0).figureAttacker, this.moveOpsList.get(0).destinationField, true);
-
-      this.stateMachine.setState(State.S.InitialState);
-      prepareForNextRound();
-    }
-  }
 
   @Override
   public void endGame() {
@@ -181,7 +90,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   @Override
-  public Player getWinner(){
+  public Spieler getWinner(){
     return this.winner;
   }
 
@@ -191,7 +100,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   @Override
-  public Player getCurrentPlayer() {
+  public Spieler getCurrentPlayer() {
     return this.currentPlayer;
   }
 
@@ -201,7 +110,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   @Override
-  public List<Player> allPlayers() {
+  public List<Spieler> allPlayers() {
     return this.players;
   }
 
@@ -215,19 +124,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     return this.moveOpsList;
   }
 
-  @Override
-  public Question getCurrentQuestion() {
-    return currentQuestion;
-  }
-
-  @Override
-  public boolean isQuestionAnsweredCorrectly() {
-    return lastQuestionAnswer;
-  }
 
   private void initPlayingBoard() {
     int currentStartMark = 0;
-    for (Player pl : players) {
+    for (Spieler pl : players) {
       pl.setStartField(currentStartMark);
       currentStartMark += BOARD_SIZE / players.size();
     }
@@ -246,7 +146,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   private boolean inJailBreak() {
-    for (Figure f : currentPlayer.getFigures()) {
+    for (Figur f : currentPlayer.getFigures()) {
       if (f.getPosition() != HOME_POSITION)
         return false;
     }
@@ -254,7 +154,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   private void prepareForNextRound() {
-    isSelfAnswerQuestion = false;
     moveOpsList.clear();
 
     setNextRound();
@@ -298,7 +197,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     boolean hasAtHome = false;
 
     if (diceNumber == 6) {
-      for (Figure f1 : currentPlayer.getFigures()) {
+      for (Figur f1 : currentPlayer.getFigures()) {
         if (f1.getPosition() == HOME_POSITION) {
           hasAtHome = true;
           destPosition = currentPlayer.getStartField();
@@ -306,7 +205,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
           destPosition = (f1.getPosition() + diceNumber) % BOARD_SIZE;
         }
 
-        Figure f2 = figureByField.get(destPosition);
+        Figur f2 = figureByField.get(destPosition);
         this.moveOpsList.add(new MoveOps(f1, f2, destPosition));
       }
       if (hasAtHome) {
@@ -319,25 +218,25 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
       }
 
     } else {
-      for (Figure f1 : currentPlayer.getFigures()) {
+      for (Figur f1 : currentPlayer.getFigures()) {
         if (f1.getPosition() == HOME_POSITION)
           continue;
 
         destPosition = (f1.getPosition() + diceNumber) % BOARD_SIZE;
-        Figure f2 = figureByField.get(destPosition);
+        Figur f2 = figureByField.get(destPosition);
         this.moveOpsList.add(new MoveOps(f1, f2, destPosition));
       }
     }
   }
 
   private void setJailBreakMoveOps() {
-    for (Figure f1 : currentPlayer.getFigures()) {
-      Figure f2 = figureByField.get(currentPlayer.getStartField());
+    for (Figur f1 : currentPlayer.getFigures()) {
+      Figur f2 = figureByField.get(currentPlayer.getStartField());
       this.moveOpsList.add(new MoveOps(f1, f2, currentPlayer.getStartField()));
     }
   }
 
-  private void resolveFieldConflicts(Figure attackerFig, Figure defenderFig, int destField) {
+  private void resolveFieldConflicts(Figur attackerFig, Figur defenderFig, int destField) {
     if (defenderFig == null) {
 
       setFigureNewPosition(attackerFig, destField, true);
@@ -355,8 +254,8 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     }
   }
 
-  private void applyCascadeResolution(Figure fig, int destField) {
-    Figure targetFig = figureByField.get(destField);
+  private void applyCascadeResolution(Figur fig, int destField) {
+    Figur targetFig = figureByField.get(destField);
     while (targetFig != null) {
       destField = decreaseFieldNumb(destField);
       targetFig = figureByField.get(destField);
@@ -374,27 +273,27 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
       return --destField;
   }
 
-  private Player getPlayerById(int playerId) {
-    for (Player pl : players) {
+  private Spieler getPlayerById(int playerId) {
+    for (Spieler pl : players) {
       if (pl.getId() == playerId)
         return pl;
     }
     return null;
   }
 
-  private void setFigureNewPosition(Figure figure, int position, boolean withRemove) {
+  private void setFigureNewPosition(Figur figure, int position, boolean withRemove) {
     if (figure == null)
       return;
 
-    System.out.format("Replaced figure#%d of player#%d from %d to %d\n", figure.getId(), figure.getPlayerId(),
+    System.out.format("Replaced figure#%d of player#%d from %d to %d\n", figure.getFigurNummer(), figure.getPlayerId(),
         figure.getPosition(), position);
 
     if (withRemove)
       figureByField.remove(figure.getPosition());
 
-    getPlayerById(figure.getPlayerId()).getFigures()[figure.getId()].setPosition(position);
+    getPlayerById(figure.getPlayerId()).getFigures()[figure.getFigurNummer()].setPosition(position);
 
-    Figure oldFig = figureByField.get(position);
+    Figur oldFig = figureByField.get(position);
     if (oldFig != null)
       figureByField.remove(position);
 
@@ -417,7 +316,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   //TODO: delete, for debugging
-  public Figure getFigureByField(int pos) {
+  public Figur getFigureByField(int pos) {
     return this.figureByField.get(pos);
   }
 

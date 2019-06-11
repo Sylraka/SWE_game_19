@@ -2,11 +2,9 @@ package application.makemove.port;
 
 import java.util.List;
 
-import application.makemove.impl.Figure;
 import application.makemove.impl.MoveOps;
-import application.makemove.impl.players.Player;
-import application.makemove.impl.questions.KnowledgeLevel.QuestionCategories;
-import application.makemove.impl.questions.Question;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
 
 
 /**
@@ -20,12 +18,12 @@ public interface MakeMoveManagement {
   void throwDice();
 
   void chooseMove(int optionId);
+//TODO später löschen, interface aufräumen
+//  void chooseQuestionFromCategory(QuestionCategories qCat);
 
-  void chooseQuestionFromCategory(QuestionCategories qCat);
+//  void answerQuestion(int answer);
 
-  void answerQuestion(int answer);
-
-  void selfAnswer(boolean isSelfAnswer);
+  //void selfAnswer(boolean isSelfAnswer);
 
   int getRoundId();
 
@@ -33,24 +31,24 @@ public interface MakeMoveManagement {
 
   int getTriesLeft();
 
-  List<Player> allPlayers();
+  List<Spieler> allPlayers();
 
-  Player getCurrentPlayer();
+  Spieler getCurrentPlayer();
 
   List<MoveOps> getMoveOps();
 
-  Question getCurrentQuestion();
+  //Question getCurrentQuestion();
 
   void endGame();
 
-  boolean isQuestionAnsweredCorrectly();
+//  boolean isQuestionAnsweredCorrectly();
 
-  Player getWinner();
+  Spieler getWinner();
 
   //TODO: delete, for debugging
   void throwCheatDice(int cheatDice);
 
   //TODO: delete, for debugging
-  Figure getFigureByField(int pos);
+  Figur getFigureByField(int pos);
 
 }

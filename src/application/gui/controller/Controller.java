@@ -4,8 +4,8 @@ import application.logic.LogicFactory;
 import application.logic.LogicFactoryImpl;
 import application.logic.port.MVCPort;
 import application.makemove.MakeMoveFactory;
-import application.makemove.impl.Figure;
-import application.makemove.impl.players.Player;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
 import application.makemove.impl.questions.KnowledgeLevel;
 import application.makemove.port.MakeMoveManagement;
 import application.statemachine.port.Observer;
@@ -154,7 +154,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void loadPlayerWsaInfo() {
-        Player player = this.model.getCurrentPlayer();
+        Spieler player = this.model.getCurrentPlayer();
         wsaRed.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.RED).getLvl() + " von 4");
         wsaBlue.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.BLUE).getLvl() + " von 4");
         wsaGreen.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.GREEN).getLvl() + " von 4");
@@ -163,9 +163,9 @@ public class Controller implements Initializable, Observer {
 
     private void loadPlayersFiguresInfo() {
         String kek = "";
-        for (Player player : this.model.allPlayers()) {
-            for (Figure fg : player.getFigures()) {
-                kek += String.format("F#%d: po = %d\t", fg.getId(), fg.getPosition());
+        for (Spieler player : this.model.allPlayers()) {
+            for (Figur fg : player.getFigures()) {
+                kek += String.format("F#%d: po = %d\t", fg.getFigurNummer(), fg.getPosition());
             }
             kek += "\n";
 

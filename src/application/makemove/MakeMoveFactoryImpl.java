@@ -1,8 +1,5 @@
 package application.makemove;
 
-import application.makemove.impl.Figure;
-import application.makemove.impl.questions.KnowledgeLevel.QuestionCategories;
-import application.makemove.impl.questions.Question;
 import application.makemove.impl.MoveOps;
 import java.util.List;
 import application.statemachine.port.State;
@@ -10,7 +7,8 @@ import application.makemove.impl.MakeMoveManagementImpl;
 import application.statemachine.port.StateMachine;
 import application.statemachine.StateMachineFactory;
 import application.statemachine.port.StateMachinePort;
-import application.makemove.impl.players.Player;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
 import application.makemove.port.MakeMoveManagement;
 import application.makemove.port.SimpleManagerPort;
 
@@ -21,7 +19,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	private MakeMoveManagementImpl moveManager;
 
 
-	private void mkMoveManager(List<Player> players) {
+	private void mkMoveManager(List<Spieler> players) {
 		if (this.moveManager == null) {
 			this.stateMachine = this.stateMachinePort.stateMachine();
 			this.moveManager = new MakeMoveManagementImpl(this.stateMachinePort, players);
@@ -34,7 +32,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public MakeMoveManagement makeMoveManagement(List<Player> players) {
+	public MakeMoveManagement makeMoveManagement(List<Spieler> players) {
 		this.mkMoveManager(players);
 		return this;
 	}
@@ -60,26 +58,6 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 		this.moveManager.chooseMove(optionId);
 	}
 
-	@Override
-	public void chooseQuestionFromCategory(QuestionCategories qCat) {
-		if (!this.stateMachine.getState().isSubStateOf(State.S.ChooseQCategoryState))
-			return;
-		this.moveManager.chooseQuestionFromCategory(qCat);
-	}
-
-	@Override
-	public void answerQuestion(int answer) {
-		if (!this.stateMachine.getState().isSubStateOf(State.S.AnswerQState))
-			return;
-		this.moveManager.answerQuestion(answer);
-	}
-
-	@Override
-	public void selfAnswer(boolean isSelfAnswer){
-		if (!this.stateMachine.getState().isSubStateOf(State.S.IsSelfAnswer))
-			return;
-		this.moveManager.selfAnswer(isSelfAnswer);
-	}
 
 	@Override
 	public int getRoundId() {
@@ -87,7 +65,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public Player getCurrentPlayer() {
+	public Spieler getCurrentPlayer() {
 		return this.moveManager.getCurrentPlayer();
 	}
 
@@ -102,23 +80,13 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public List<Player> allPlayers(){
+	public List<Spieler> allPlayers(){
 		return this.moveManager.allPlayers();
 	}
 
 	@Override
 	public List<MoveOps> getMoveOps() {
 		return this.moveManager.getMoveOps();
-	}
-
-	@Override
-	public Question getCurrentQuestion(){
-		return this.moveManager.getCurrentQuestion();
-	}
-
-	@Override
-	public boolean isQuestionAnsweredCorrectly(){
-		return this.moveManager.isQuestionAnsweredCorrectly();
 	}
 
 	@Override
@@ -129,7 +97,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public Player getWinner(){
+	public Spieler getWinner(){
 		if (!this.stateMachine.getState().isSubStateOf(State.S.EndGameState))
 			return null;
 		return this.moveManager.getWinner();
@@ -145,7 +113,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 
 	//TODO: delete, for debugging only
 	@Override
-  public Figure getFigureByField(int pos){
+  public Figur getFigureByField(int pos){
 		return this.moveManager.getFigureByField(pos);
 	}
 
