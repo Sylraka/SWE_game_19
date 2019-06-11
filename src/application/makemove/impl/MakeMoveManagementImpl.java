@@ -248,20 +248,41 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 		if (spielerAufFeld == null) {
 
-			// setFigureNewPosition(attackerFig, destField, true);
+			figur.setPosition(aktuellesZiel);
 			this.stateMachine.setState(State.S.InitialState);
 			resetVariablenFuerNaechsteRunde();
 
-			// } else if (attackerFig.getPlayerId() != defenderFig.getPlayerId()) {
+		} else {
+			// wenn ein fight auftritt
+			// TODO das in die GUI verlagern
+			// TODO eine Wahl, ob die Frage richtig oder falsch beantwortet wurde implementieren
+			System.out.println("Hier wird eine Frage an Spieler " + spielerAufFeld.getSpielerName()
+					+ " gestellt, er hat die Frage falsch beantwortet");
+			// falsche antwort: defender wird aufs heimatfeld gesetzt
+			setFigurAufHeimatfeld(spielerAufFeld, aktuellesZiel);
 
 			this.moeglicheSchritte.clear();
-			this.moeglicheSchritte.add(new MoveOps(attackerFig, defenderFig, defenderFig.getPosition()));
-
-			this.stateMachine.setState(State.S.ChooseQCategoryState);
+			this.stateMachine.setState(State.S.InitialState);
 			// } else {
-			applyCascadeResolution(attackerFig, defenderFig.getPosition());
+			// applyCascadeResolution(attackerFig, defenderFig.getPosition());
 		}
 
+	}
+
+	private void setFigurAufHeimatfeld(Spieler spieler, int position) {
+		for (Figur figur : spieler.getFiguren()) {
+			if (figur.getPosition() == position) {
+				figur.setPosition(-1);
+			}
+		}
+	}
+
+	private void setFigurAufStartfeld(Spieler spieler, int position) {
+		for (Figur figur : spieler.getFiguren()) {
+			if (figur.getPosition() == position) {
+				figur.setPosition(spieler.getStartFeld());
+			}
+		}
 	}
 
 	private void applyCascadeResolution(Figur fig, int destField) {
