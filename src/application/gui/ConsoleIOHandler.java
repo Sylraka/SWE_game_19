@@ -118,26 +118,30 @@ public class ConsoleIOHandler implements Observer {
 
 		if (currentState == State.S.WurfState) {
 			posKeys = "";
-			System.out.println("Tries left: " + this.model.getTriesLeft());
+			System.out.println("Wurf: " + (3 - this.model.getTriesLeft()));
 		}
 
 		if (currentState == State.S.WahlState) {
-			posKeys = "number of option";
+//			posKeys = 
 			printChooseMove();
+			System.out.format("Figur zum Bewegen auswählen\n" + 
+					"Drücken Sie");
+			//TODO: Optionen ausgeben
+
 		}
 
-		if (currentState == State.S.EndGameState) {
-			System.out.println("Winner: "+this.model.getWinner().getPlayerName());
-			posKeys = "e - exit";
-		}
+//		if (currentState == State.S.EndGameState) {
+//			System.out.println("Winner: "+this.model.getWinner().getPlayerName());
+//			posKeys = "e - exit";
+//		}
 
-		if (currentState == State.S.IsSelfAnswer) {
-			posKeys = "y - yes, n - no";
-			System.out.println("Do you wish to answer yourself?");
-		}
+//		if (currentState == State.S.IsSelfAnswer) {
+//			posKeys = "y - yes, n - no";
+//			System.out.println("Do you wish to answer yourself?");
+//		}
 
-		System.out.format("Possible keys to press: ( %s )\n", posKeys);
-		System.out.println("====================");
+//		System.out.format("Possible keys to press: ( %s )\n", posKeys);
+//		System.out.println("====================");
 	}
 
 	public void update(State newState) {
@@ -145,9 +149,7 @@ public class ConsoleIOHandler implements Observer {
 			return;
 
 		if (currentState == State.S.WurfState) {
-			System.out.println("*******************");
-			System.out.println("Thrown: " + this.model.getDiceNumber());
-			System.out.println("*******************");
+			System.out.println("Gewürfelte Zahl: " + this.model.getDiceNumber());
 		}
 
 		currentState = newState;
@@ -155,80 +157,67 @@ public class ConsoleIOHandler implements Observer {
 
 	private void printChooseMove() {
 		if (currentState == State.S.WahlState) {
-			System.out.println("*******************");
-			System.out.println("It's time to choose, Mr.Freeman.");
-			int i = 0;
 			for (MoveOps mo : this.model.getMoveOps()) {
+				// Neues Feld is unbesetzt
 				if (mo.figureDefender == null) {
-					System.out.format("Option#%d: FigureID#%d from position (%d) to %d. Free field!\n", i,
+					System.out.format("Figur %d von Feld (%d) auf Feld %d.\n", 
 							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
+					
+				// Neues Feld ist von eigener Figur besetzt
+				// TODO: Regelabfrage ob selbst Frage gestellt werden darf
 				} else if (mo.figureDefender.getPlayerId() == mo.figureAttacker.getPlayerId()) {
-					System.out.format("Option#%d: FigureID#%d from position (%d) to %d. -1Regel (attacker %d, defender %d)!\n", i,
-							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField,
-							mo.figureAttacker.getPlayerId(), mo.figureDefender.getPlayerId());
-				}
-
-				else {
-					String defPlayerName = "";
-					for (Player pl : this.model.allPlayers()) {
-						if (pl.getId() == mo.figureDefender.getPlayerId()) {
-							defPlayerName = pl.getPlayerName();
-							break;
-						}
-					}
+					System.out.format("Figur %d von Feld (%d) auf Feld %d.\n", 
+							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
+				
+				// Neues Feld ist von einer Figur eines Mitspielers besetzt, haben wir nicht umgesetzt
+				} else {
+					//TODO: Hier wird der Name des Spielers ermittelt der sich auf dem Feld befindet, bei uns nicht verwendet
+//					String defPlayerName = "";
+//					for (Player pl : this.model.allPlayers()) {
+//						if (pl.getId() == mo.figureDefender.getPlayerId()) {
+//							defPlayerName = pl.getPlayerName();
+//							break;
+//						}
+//					}
 
 					System.out.format(
-							"Option#%d: FigureID#%d from position (%d) to %d. Attack on %s (attacker %d, defender %d)!\n", i,
-							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField, defPlayerName,
-							mo.figureAttacker.getPlayerId(), mo.figureDefender.getPlayerId());
+							"Figur %d von Feld (%d) auf Feld %d.\n", 
+							mo.figureAttacker.getId(), mo.figureAttacker.getPosition(), mo.destinationField);
 				}
-				i++;
 			}
-			System.out.println("*******************");
 		}
 	}
 
-	private void printQuestion() {
-		Question curQ = this.model.getCurrentQuestion();
-		System.out.println("*******Question******");
-		System.out.format("%s\nAnswers:\n", curQ.getQuestionBody());
-
-		for (int i = 0; i < curQ.getAnswers().length; i++)
-			System.out.format("#%d: %s\n", i, curQ.getAnswers()[i]);
-
-		System.out.println("*******Question******");
-	}
+//	private void printQuestion() {
+//		Question curQ = this.model.getCurrentQuestion();
+//		System.out.println("*******Question******");
+//		System.out.format("%s\nAnswers:\n", curQ.getQuestionBody());
+//
+//		for (int i = 0; i < curQ.getAnswers().length; i++)
+//			System.out.format("#%d: %s\n", i, curQ.getAnswers()[i]);
+//
+//		System.out.println("*******Question******");
+//	}
 	
 //TODO 
-//	private void printFieldStatus() {
-//		System.out.println("*******STATUS******");
-//		for (Player pl : this.model.allPlayers()) {
-//			System.out.println("\nStatus of player " + pl.getPlayerName());
-//			System.out.println("---------------------------------");
-//			System.out.print("RED: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.RED).getLvl());
-//			System.out.print(", BLUE: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.BLUE).getLvl());
-//			System.out.print(", YELLOW: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.YELLOW).getLvl());
-//			System.out.print(", GREEN: " + pl.getKnowledgeLevelsByCategory(QuestionCategories.GREEN).getLvl());
-//			System.out.println("\n---------------------------------");
-//			for (Figure fg : pl.getFigures()) {
-//				System.out.format("Figure#%d: position = %d\n", fg.getId(), fg.getPosition());
-//			}
-//		}
-//		System.out.println("*****STATUS*******");
-//	}
+	private void printFieldStatus() {
+		for (Player pl : this.model.allPlayers()) {
+			System.out.println("\n" + pl.getPlayerName() + ":\t");
+			for (Figure fg : pl.getFigures()) {
+				System.out.format("Figur %d: Feld %d\n", fg.getId(), fg.getPosition());
+			}
+		}
+	}
 
 	private void printFigureMap() {
-	//	System.out.println("*******ALL FIELDS******");
 		//TODO ausgabe anpassen: anfrage der felder über den gespeicherten wert in figure.java
 		for (int i = 0; i < 48; i++) {
 			Figure curFig = this.model.getFigureByField(i);
-			if (curFig == null)
-		//		System.out.format("On the field %d: nothing...\n", i);
-			else
+			if (curFig != null) {
 				System.out.format("On the field %d(self->%d): figure#%d (Player#%d)\n", i, curFig.getPosition(), curFig.getId(),
 						curFig.getPlayerId());
 		}
-		System.out.println("*******ALL FIELDS******");
+			}
 	}
 
 }
