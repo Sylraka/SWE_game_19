@@ -146,7 +146,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   private boolean inJailBreak() {
-    for (Figur f : currentPlayer.getFigures()) {
+    for (Figur f : currentPlayer.getFiguren()) {
       if (f.getPosition() != HOME_POSITION)
         return false;
     }
@@ -197,7 +197,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     boolean hasAtHome = false;
 
     if (diceNumber == 6) {
-      for (Figur f1 : currentPlayer.getFigures()) {
+      for (Figur f1 : currentPlayer.getFiguren()) {
         if (f1.getPosition() == HOME_POSITION) {
           hasAtHome = true;
           destPosition = currentPlayer.getStartField();
@@ -218,7 +218,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
       }
 
     } else {
-      for (Figur f1 : currentPlayer.getFigures()) {
+      for (Figur f1 : currentPlayer.getFiguren()) {
         if (f1.getPosition() == HOME_POSITION)
           continue;
 
@@ -230,7 +230,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
   }
 
   private void setJailBreakMoveOps() {
-    for (Figur f1 : currentPlayer.getFigures()) {
+    for (Figur f1 : currentPlayer.getFiguren()) {
       Figur f2 = figureByField.get(currentPlayer.getStartField());
       this.moveOpsList.add(new MoveOps(f1, f2, currentPlayer.getStartField()));
     }
@@ -275,7 +275,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
   private Spieler getPlayerById(int playerId) {
     for (Spieler pl : players) {
-      if (pl.getId() == playerId)
+      if (pl.getSpielerNummer() == playerId)
         return pl;
     }
     return null;
@@ -291,7 +291,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
     if (withRemove)
       figureByField.remove(figure.getPosition());
 
-    getPlayerById(figure.getPlayerId()).getFigures()[figure.getFigurNummer()].setPosition(position);
+    getPlayerById(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
 
     Figur oldFig = figureByField.get(position);
     if (oldFig != null)

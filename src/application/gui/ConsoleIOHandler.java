@@ -107,7 +107,7 @@ public class ConsoleIOHandler implements Observer {
 
 		//System.out.println("====================");
 		// System.out.println("State: " + currentState.toString());
-		System.out.println(this.model.getCurrentPlayer().getPlayerName() + " ist am Zug");
+		System.out.println(this.model.getCurrentPlayer().getSpielerName() + " ist am Zug");
 		
 		
 		// unsere states sind: initial, wurf, wahl, evtl end
@@ -203,8 +203,8 @@ public class ConsoleIOHandler implements Observer {
 //TODO 
 	private void printFieldStatus() {
 		for (Spieler pl : this.model.allPlayers()) {
-			System.out.println("\n" + pl.getPlayerName() + ":\t");
-			for (Figur fg : pl.getFigures()) {
+			System.out.println("\n" + pl.getSpielerName() + ":\t");
+			for (Figur fg : pl.getFiguren()) {
 				System.out.format("Figur %d: Feld %d\n", fg.getFigurNummer(), fg.getPosition());
 			}
 		}

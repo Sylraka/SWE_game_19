@@ -5,64 +5,52 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-import application.makemove.impl.players.Colors;
 
 public class Spieler {
-	private static final int NUMBER_OF_FIGURES = 3;
 
-	private int id;
-	private Colors color;
+	private int[] startFeld = { 0, 12, 24, 36 };
+	private int spielerNummer;
+	private String[] farben = {"ROT","BLAU","GRUEN","GELB"};
 	private String name;
 	private int startField;
 
-	private Figur[] playerFigures;
+	private Figur[] spielerFiguren;
 
-	public Spieler(int id, Colors color) {
-		this.id = id;
-		this.color = color;
-		this.name = color.getName();
-		initializeFields();
+	public Spieler(int spielerNummer) {
+		this.spielerNummer = spielerNummer;
+		// farbe/name wird abhängig von der Spielernummer aus dem String farben gesetzt
+		this.name = farben[spielerNummer];
+		setzeFiguren();
 	}
 
-	public Spieler(int id, Colors color, String name) {
-		this.id = id;
-		this.name = name;
-		this.color = color;
-		initializeFields();
+	public int getSpielerNummer() {
+		return spielerNummer;
 	}
 
-	public int getId() {
-		return id;
+	public void setSpielerNummer(int id) {
+		this.spielerNummer = id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getPlayerName() {
+	public String getSpielerName() {
 		return name;
 	}
 
-	public Colors getColor() {
-		return color;
-	}
-
-	public void setStartField(int startField) {
-		this.startField = startField;
+	public String getFarbe() {
+		return this.farben[this.spielerNummer];
 	}
 
 	public int getStartField() {
-		return startField;
+		return this.startFeld[this.spielerNummer];
 	}
 
-	public Figur[] getFigures() {
-		return playerFigures;
+	public Figur[] getFiguren() {
+		return spielerFiguren;
 	}
 
-	private void initializeFields() {
-		playerFigures = new Figur[NUMBER_OF_FIGURES];
-		for (int i = 0; i < playerFigures.length; i++) {
-			playerFigures[i] = new Figur(i);
+	//setzt die 3 figuren des Spielers, auf ihr jeweiliges Heimatfeld
+	private void setzeFiguren() {
+		for (int i = 0; i < 3; i++) {
+			spielerFiguren[i] = new Figur(i);
 		}
 
 	}

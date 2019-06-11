@@ -64,7 +64,7 @@ public class Controller implements Initializable, Observer {
 
         if (currentState == State.S.InitialState) {
             System.out.println(currentState);
-            AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getCurrentPlayer().getPlayerName()));
+            AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getCurrentPlayer().getSpielerName()));
             loadOnScreenInfos();
             this.model.startNewRound(); //need a better place
         }
@@ -119,7 +119,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void loadOnScreenInfos() {
-        playerColor.setText(this.model.getCurrentPlayer().getPlayerName());
+        playerColor.setText(this.model.getCurrentPlayer().getSpielerName());
         loadPlayerWsaInfo();
         loadPlayersFiguresInfo();
     }
@@ -164,7 +164,7 @@ public class Controller implements Initializable, Observer {
     private void loadPlayersFiguresInfo() {
         String kek = "";
         for (Spieler player : this.model.allPlayers()) {
-            for (Figur fg : player.getFigures()) {
+            for (Figur fg : player.getFiguren()) {
                 kek += String.format("F#%d: po = %d\t", fg.getFigurNummer(), fg.getPosition());
             }
             kek += "\n";
