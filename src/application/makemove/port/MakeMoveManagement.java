@@ -1,11 +1,10 @@
 package application.makemove.port;
 
 import java.util.List;
+import java.util.Map;
 
-import application.makemove.impl.MoveOps;
 import application.makemove.impl.players.Figur;
 import application.makemove.impl.players.Spieler;
-
 
 /**
  * @url element://model:project::SWE_Spiel/jdt:e_class:src:design.comp.MakeMoveManagement
@@ -13,42 +12,43 @@ import application.makemove.impl.players.Spieler;
 
 public interface MakeMoveManagement {
 
-  void startNewRound();
+	void startNewRound();
 
-  void throwDice();
+	void throwDice();
 
-  void chooseMove(int optionId);
-//TODO später löschen, interface aufräumen
-//  void chooseQuestionFromCategory(QuestionCategories qCat);
+	void bewegeFigur(Figur figur, int optionId);
+	
+	// TODO später löschen, interface aufräumen
+	// void chooseQuestionFromCategory(QuestionCategories qCat);
 
-//  void answerQuestion(int answer);
+	// void answerQuestion(int answer);
 
-  //void selfAnswer(boolean isSelfAnswer);
+	// void selfAnswer(boolean isSelfAnswer);
 
-  int getRoundId();
+	int getRoundId();
 
-  int getDiceNumber();
+	int getDiceNumber();
 
-  int getTriesLeft();
+	int getTriesLeft();
 
-  List<Spieler> allPlayers();
+	List<Spieler> allPlayers();
 
-  Spieler getCurrentPlayer();
+	Spieler getCurrentPlayer();
 
-  List<MoveOps> getMoveOps();
+	Map<Figur, Integer> getMoeglicheSchritte();
 
-  //Question getCurrentQuestion();
+	// Question getCurrentQuestion();
 
-  void endGame();
+	void endGame();
 
-//  boolean isQuestionAnsweredCorrectly();
+	// boolean isQuestionAnsweredCorrectly();
 
-  Spieler getWinner();
+	Spieler getWinner();
 
-  //TODO: delete, for debugging
-  void throwCheatDice(int cheatDice);
+	// TODO: delete, for debugging
+	void throwCheatDice(int cheatDice);
 
-  //TODO: delete, for debugging
-  Figur getFigureByField(int pos);
+	// TODO: delete, for debugging
+	Figur getFigureByField(int pos);
 
 }

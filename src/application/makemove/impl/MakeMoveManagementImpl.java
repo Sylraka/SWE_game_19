@@ -61,15 +61,8 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	}
 
 	@Override
-	public void chooseMove(int optionId) {
-		MoveOps mOps = null;
-		try {
-			mOps = moeglicheSchritte.get(optionId);
-		} catch (IndexOutOfBoundsException e) {
-			return;
-		}
-
-		resolveFieldConflicts(mOps.figureAttacker, mOps.figureDefender, mOps.destinationField);
+	public void bewegeFigur(Figur figur) {
+		schliesseRundeAb(figur);
 	}
 
 	@Override
@@ -109,9 +102,8 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return MAX_ANZAHL_VERSUCHE - this.anzahlWuerfe;
 	}
 
-	//TODO zu Map ändern
 	@Override
-	public List<MoveOps> getMoveOps() {
+	public Map<Figur, Integer> getMoeglicheSchritte() {
 		return this.moeglicheSchritte;
 	}
 
@@ -189,9 +181,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 					moeglicheSchritte.put(figur, aktuellerSpieler.getStartFeld());
 				}
 			}
+			this.stateMachine.setState(State.S.WahlState);
 		} else {
 			if (istEineFigurImSpiel()) {
-				// berechneMoeglicheSpielzüge(figurAktuellerSPieler){
+				// berechneMoeglicheSpielzüge(figurAktuellerSPieler)
 				for (Figur figur : aktuellerSpieler.getFiguren()) {
 					if (!figur.isHeimatsfeld()) {
 						moeglicheSchritte.put(figur, (figur.getPosition() + augenzahl) % 48);
@@ -204,13 +197,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 				// else {
 				// entferneUnmoeglicheSchritte();
 				// }
-
-				// TODO setState (wahl)
-				// setState(wahl);
+				this.stateMachine.setState(State.S.WahlState);
 			} else {
 				if (anzahlWuerfe == 3) {
-					// TODO setstate (initial)
-					// setstate (initial)
+					this.stateMachine.setState(State.S.InitialState);
 				} else {
 					// aktuellerSpieler würfelt nochmal???
 				}
@@ -240,22 +230,38 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		}
 	}
 
-	private void resolveFieldConflicts(Figur attackerFig, Figur defenderFig, int destField) {
-		if (defenderFig == null) {
+	private Spieler getSpielerAufFeld(int position) {
+		for (Spieler spieler : spielerliste) {
+			for (Figur figur : spieler.getFiguren()) {
+				if (figur.getPosition() == position) {
+					return spieler;
+				}
+			}
+		}
+		return null;
+	}
 
-			setFigureNewPosition(attackerFig, destField, true);
+	private void schliesseRundeAb(Figur figur) {
+
+		int aktuellesZiel = moeglicheSchritte.get(figur);
+		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
+
+		if (spielerAufFeld == null) {
+
+			// setFigureNewPosition(attackerFig, destField, true);
 			this.stateMachine.setState(State.S.InitialState);
 			resetVariablenFuerNaechsteRunde();
 
-		} else if (attackerFig.getPlayerId() != defenderFig.getPlayerId()) {
+			// } else if (attackerFig.getPlayerId() != defenderFig.getPlayerId()) {
 
 			this.moeglicheSchritte.clear();
 			this.moeglicheSchritte.add(new MoveOps(attackerFig, defenderFig, defenderFig.getPosition()));
 
 			this.stateMachine.setState(State.S.ChooseQCategoryState);
-		} else {
+			// } else {
 			applyCascadeResolution(attackerFig, defenderFig.getPosition());
 		}
+
 	}
 
 	private void applyCascadeResolution(Figur fig, int destField) {

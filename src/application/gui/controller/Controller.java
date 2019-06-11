@@ -92,9 +92,9 @@ public class Controller implements Initializable, Observer {
 
     @FXML
     private void chooseFigure(ActionEvent event) {
-        if (radioFigure1.isSelected()) this.model.chooseMove(0);
-        if (radioFigure2.isSelected()) this.model.chooseMove(1);
-        if (radioFigure3.isSelected()) this.model.chooseMove(2);
+        if (radioFigure1.isSelected()) this.model.bewegeFigur(0);
+        if (radioFigure2.isSelected()) this.model.bewegeFigur(1);
+        if (radioFigure3.isSelected()) this.model.bewegeFigur(2);
 
         textOutput.setText(kek);
 

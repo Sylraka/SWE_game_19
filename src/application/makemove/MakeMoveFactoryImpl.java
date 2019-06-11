@@ -52,10 +52,10 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public void chooseMove(int optionId) {
+	public void bewegeFigur(int optionId) {
 		if (!this.stateMachine.getState().isSubStateOf(State.S.WahlState))
 			return;
-		this.moveManager.chooseMove(optionId);
+		this.moveManager.bewegeFigur(optionId);
 	}
 
 

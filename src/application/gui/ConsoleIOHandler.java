@@ -70,7 +70,7 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.matches(".*\\d+.*") && currentState == State.S.WahlState) {
-				this.model.chooseMove(Integer.parseInt(str));
+				this.model.bewegeFigur(Integer.parseInt(str));
 				continue;
 			}
 
