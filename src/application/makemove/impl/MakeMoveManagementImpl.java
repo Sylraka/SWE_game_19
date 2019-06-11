@@ -20,10 +20,11 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	private StateMachine stateMachine;
 
 	private int aktuelleRunde;
-	private int uebrigeVersuche;
+	private int anzahlWuerfe;
 	private int augenzahl;
 	private Spieler aktuellerSpieler;
 	private Spieler gewinner;
+	private int anzahlFigurenAufHeimatsfeld = 0;
 
 	// für die Figur, wohin sie sich bewegen kann in diesem Zug, int = Endpunkt
 	private Map<Figur, Integer> moeglicheSchritte;
@@ -36,9 +37,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		this.spielerliste = spielerliste;
 		this.aktuellerSpieler = spielerliste.get(0);
 		this.aktuelleRunde = 0;
-		this.uebrigeVersuche = MAX_ANZAHL_VERSUCHE;
-		this.moeglicheSchritte = new ArrayList<>();
-
+		this.anzahlWuerfe = 0;
 	}
 
 	@Override
@@ -48,12 +47,12 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 	@Override
 	public void throwDice() {
-		uebrigeVersuche--;
+		anzahlWuerfe++;
 		augenzahl = getRandomDiceNumber();
 
 		if (hasMoves())
 			this.stateMachine.setState(State.S.WahlState);
-		else if (uebrigeVersuche == 0) {
+		else if (anzahlWuerfe == 0) {
 			this.stateMachine.setState(State.S.InitialState);
 			resetVariablenFuerNaechsteRunde();
 		} else {
@@ -107,9 +106,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 	@Override
 	public int getTriesLeft() {
-		return this.uebrigeVersuche;
+		return MAX_ANZAHL_VERSUCHE - this.anzahlWuerfe;
 	}
 
+	//TODO zu Map ändern
 	@Override
 	public List<MoveOps> getMoveOps() {
 		return this.moeglicheSchritte;
@@ -177,49 +177,58 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		aktuellerSpieler = spielerliste.get(nextId);
 	}
 
-	private void setAnzahlVersuche() {
-		if (!istMinEineFigurAufSpielfeld())
-			uebrigeVersuche = MAX_ANZAHL_VERSUCHE;
-		else
-			uebrigeVersuche = 1;
-	}
-
 	private void berechneMoeglicheSchritte() {
 		// private Map<Figur, Integer> moeglicheSchritte;
 		int endposition;
-		boolean hasAtHome = false; // es sitzt eine figur auf dem heimatsfeld
 
-		if (augenzahl == 6) {
-			for (Figur f1 : aktuellerSpieler.getFiguren()) {
-				if (f1.isHeimatsfeld()) {
-					hasAtHome = true;
-					endposition = aktuellerSpieler.getStartFeld();
-				} else {
-					endposition = (f1.getPosition() + augenzahl) % SPIELFELDGROESSE;
+		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0) {
+			// dann setze die figur aufs startfeld
+
+			for (Figur figur : aktuellerSpieler.getFiguren()) {
+				if (figur.isHeimatsfeld()) {
+					moeglicheSchritte.put(figur, aktuellerSpieler.getStartFeld());
 				}
-
-				Figur f2 = figureByField.get(endposition);
-				this.moeglicheSchritte.add(new MoveOps(f1, f2, endposition));
 			}
-			// if (hasAtHome) {
-			// //wenn ni
-			// for (Iterator<MoveOps> iterator = moeglicheSchritte.iterator();
-			// iterator.hasNext();) {
-			// MoveOps opt = iterator.next();
-			// if (opt.figureAttacker.getPosition() != HOME_POSITION) {
-			// iterator.remove();
-			// }
-			// }
-			// }
-
 		} else {
-			for (Figur f1 : aktuellerSpieler.getFiguren()) {
-				if (f1.getPosition() == HOME_POSITION)
-					continue;
+			if (istEineFigurImSpiel()) {
+				// berechneMoeglicheSpielzüge(figurAktuellerSPieler){
+				for (Figur figur : aktuellerSpieler.getFiguren()) {
+					if (!figur.isHeimatsfeld()) {
+						moeglicheSchritte.put(figur, (figur.getPosition() + augenzahl) % 48);
+					}
+				}
+				// TODO: Einfügen einfache Variente!!!
+				// if(einfacheVariante) {
+				//
+				// }
+				// else {
+				// entferneUnmoeglicheSchritte();
+				// }
 
-				endposition = (f1.getPosition() + augenzahl) % SPIELFELDGROESSE;
-				Figur f2 = figureByField.get(endposition);
-				this.moeglicheSchritte.add(new MoveOps(f1, f2, endposition));
+				// TODO setState (wahl)
+				// setState(wahl);
+			} else {
+				if (anzahlWuerfe == 3) {
+					// TODO setstate (initial)
+					// setstate (initial)
+				} else {
+					// aktuellerSpieler würfelt nochmal???
+				}
+			}
+
+		}
+
+	}
+
+	private boolean istEineFigurImSpiel() {
+		return anzahlFigurenAufHeimatsfeld < 3;
+	}
+
+	private void berechneAnzahlFigurenAufHeimatsfeld() {
+		anzahlFigurenAufHeimatsfeld = 0;
+		for (Figur figur : aktuellerSpieler.getFiguren()) {
+			if (figur.isHeimatsfeld()) {
+				anzahlFigurenAufHeimatsfeld++;
 			}
 		}
 	}
@@ -297,12 +306,13 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 	// TODO: delete, for debugging
 	public void throwCheatDice(int cheatDice) {
-		uebrigeVersuche--;
+		anzahlWuerfe++;
 		augenzahl = cheatDice;
 
 		if (hasMoves())
 			this.stateMachine.setState(State.S.WahlState);
-		else if (uebrigeVersuche == 0) {
+		// TODO Überprüfen, ob es richtig ist
+		else if (anzahlWuerfe == 3) {
 			this.stateMachine.setState(State.S.InitialState);
 			resetVariablenFuerNaechsteRunde();
 		} else {
