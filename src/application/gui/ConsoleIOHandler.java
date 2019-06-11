@@ -1,8 +1,6 @@
 package application.gui;
 
-import application.makemove.impl.questions.KnowledgeLevel;
-import application.makemove.impl.questions.KnowledgeLevel.QuestionCategories;
-import application.makemove.impl.questions.Question;
+
 import application.makemove.impl.players.Figur;
 import application.makemove.impl.players.Spieler;
 import application.makemove.impl.MoveOps;
@@ -71,28 +69,8 @@ public class ConsoleIOHandler implements Observer {
 				continue;
 			}
 
-			if (str.equals("y") && currentState == State.S.IsSelfAnswer) {
-				this.model.selfAnswer(true);
-				continue;
-			}
-
-			if (str.equals("n") && currentState == State.S.IsSelfAnswer) {
-				this.model.selfAnswer(false);
-				continue;
-			}
-
 			if (str.matches(".*\\d+.*") && currentState == State.S.WahlState) {
 				this.model.chooseMove(Integer.parseInt(str));
-				continue;
-			}
-
-			if (str.matches("r") && currentState == State.S.ChooseQCategoryState) {
-				this.model.chooseQuestionFromCategory(QuestionCategories.RED);
-				continue;
-			}
-
-			if (str.matches(".*\\d+.*") && currentState == State.S.AnswerQState) {
-				this.model.answerQuestion(Integer.parseInt(str));
 				continue;
 			}
 
@@ -136,11 +114,6 @@ public class ConsoleIOHandler implements Observer {
 //			posKeys = "e - exit";
 //		}
 
-//		if (currentState == State.S.IsSelfAnswer) {
-//			posKeys = "y - yes, n - no";
-//			System.out.println("Do you wish to answer yourself?");
-//		}
-
 //		System.out.format("Possible keys to press: ( %s )\n", posKeys);
 //		System.out.println("====================");
 	}
@@ -165,14 +138,14 @@ public class ConsoleIOHandler implements Observer {
 							mo.figureAttacker.getFigurNummer(), mo.figureAttacker.getPosition(), mo.destinationField);
 					
 				// Neues Feld ist von eigener Figur besetzt
-				// TODO: Regelabfrage ob selbst Frage gestellt werden darf
+				// TODO: wann stellt man sich selbst eine frage
 				} else if (mo.figureDefender.getPlayerId() == mo.figureAttacker.getPlayerId()) {
 					System.out.format("Figur %d von Feld (%d) auf Feld %d.\n", 
 							mo.figureAttacker.getFigurNummer(), mo.figureAttacker.getPosition(), mo.destinationField);
 				
 				// Neues Feld ist von einer Figur eines Mitspielers besetzt, haben wir nicht umgesetzt
-				} else {
-					//TODO: Hier wird der Name des Spielers ermittelt der sich auf dem Feld befindet, bei uns nicht verwendet
+				} else { 
+					//TODO: wann stellt man anderen eine frage
 //					String defPlayerName = "";
 //					for (Player pl : this.model.allPlayers()) {
 //						if (pl.getId() == mo.figureDefender.getPlayerId()) {

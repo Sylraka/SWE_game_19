@@ -13,7 +13,8 @@ public interface State {
 	public enum S implements State {
 		InitialState, WurfState, WahlState, EndGameState,
 		//TODO letzte zeile brauchen wir eig nicht, delete später
-		ChooseQCategoryState, AnswerQState, IsSelfAnswer;
+		ChooseQCategoryState, AnswerQState;
+		//IsSelfAnswer;
 		
 
 

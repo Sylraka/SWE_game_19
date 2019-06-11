@@ -1,6 +1,5 @@
 package application.makemove.impl;
 
-
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,309 +14,305 @@ import application.makemove.impl.players.Figur;
 import application.makemove.impl.players.Spieler;
 
 public class MakeMoveManagementImpl implements MakeMoveManagement {
-  private static final int MAX_NUMBER_OF_TRIES = 3;
-  private static final int BOARD_SIZE = 48;
-  private static final int HOME_POSITION = -1;
-  private static final int MOCK_CORRECT_ANSWER = 0;
-  private final List<Spieler> players;
-  private StateMachine stateMachine;
+	private static final int MAX_ANZAHL_VERSUCHE = 3;
+	private static final int SPIELFELDGROESSE = 48;
+	private final List<Spieler> spielerliste;
+	private StateMachine stateMachine;
 
-  private int roundId;
-  private int triesLeft;
-  private int diceNumber;
-  private Spieler currentPlayer;
-  private Spieler winner;
+	private int aktuelleRunde;
+	private int uebrigeVersuche;
+	private int augenzahl;
+	private Spieler aktuellerSpieler;
+	private Spieler gewinner;
 
-  //Two maps for quick search
-  private Map<Integer, Figur> figureByField;
-  private List<MoveOps> moveOpsList;
+	// für die Figur, wohin sie sich bewegen kann in diesem Zug, int = Endpunkt
+	private Map<Figur, Integer> moeglicheSchritte;
 
+	public MakeMoveManagementImpl(StateMachinePort stPort, List<Spieler> spielerliste) {
+		System.out.println("Viel Spaß bei unserem Spiel! :)");
+		System.out.println("Anzahl der Spieler: " + spielerliste.size());
+		this.stateMachine = stPort.stateMachine();
 
-  public MakeMoveManagementImpl(StateMachinePort stPort, List<Spieler> players) {
-    System.out.println("Game started.");
-    System.out.println("Number of players: " + players.size());
-    this.stateMachine = stPort.stateMachine();
+		this.spielerliste = spielerliste;
+		this.aktuellerSpieler = spielerliste.get(0);
+		this.aktuelleRunde = 0;
+		this.uebrigeVersuche = MAX_ANZAHL_VERSUCHE;
+		this.moeglicheSchritte = new ArrayList<>();
 
-    this.players = players;
-    this.currentPlayer = players.get(0);
-    this.roundId = 0;
-    this.triesLeft = MAX_NUMBER_OF_TRIES;
-    this.figureByField = new HashMap<>();
-    this.moveOpsList = new ArrayList<>();
+	}
 
- 
-    initPlayingBoard();
-  }
+	@Override
+	public void startNewRound() {
+		this.stateMachine.setState(State.S.WurfState);
+	}
 
-  @Override
-  public void startNewRound() {
-    this.stateMachine.setState(State.S.WurfState);
-  }
+	@Override
+	public void throwDice() {
+		uebrigeVersuche--;
+		augenzahl = getRandomDiceNumber();
 
-  @Override
-  public void throwDice() {
-    triesLeft--;
-    diceNumber = getRandomDiceNumber();
+		if (hasMoves())
+			this.stateMachine.setState(State.S.WahlState);
+		else if (uebrigeVersuche == 0) {
+			this.stateMachine.setState(State.S.InitialState);
+			resetVariablenFuerNaechsteRunde();
+		} else {
+			this.stateMachine.setState(State.S.WurfState);
+		}
+	}
 
-    if (hasMoves())
-      this.stateMachine.setState(State.S.WahlState);
-    else if (triesLeft == 0) {
-      this.stateMachine.setState(State.S.InitialState);
-      prepareForNextRound();
-    } else {
-      this.stateMachine.setState(State.S.WurfState);
-    }
-  }
+	@Override
+	public void chooseMove(int optionId) {
+		MoveOps mOps = null;
+		try {
+			mOps = moeglicheSchritte.get(optionId);
+		} catch (IndexOutOfBoundsException e) {
+			return;
+		}
 
-  @Override
-  public void chooseMove(int optionId) {
-    MoveOps mOps = null;
-    try {
-      mOps = moveOpsList.get(optionId);
-    } catch (IndexOutOfBoundsException e) {
-      return;
-    }
+		resolveFieldConflicts(mOps.figureAttacker, mOps.figureDefender, mOps.destinationField);
+	}
 
-    resolveFieldConflicts(mOps.figureAttacker, mOps.figureDefender, mOps.destinationField);
-  }
+	@Override
+	public void endGame() {
+		// TODO: Switch to next use case (Statistics) in next Sprint
+		System.out.println("Game ended.");
+		System.exit(0);
+	}
 
+	@Override
+	public Spieler getWinner() {
+		return this.gewinner;
+	}
 
-  @Override
-  public void endGame() {
-    //TODO: Switch to next use case (Statistics) in next Sprint
-    System.out.println("Game ended.");
-    System.exit(0);
-  }
+	@Override
+	public int getRoundId() {
+		return this.aktuelleRunde;
+	}
 
-  @Override
-  public Spieler getWinner(){
-    return this.winner;
-  }
+	@Override
+	public Spieler getCurrentPlayer() {
+		return this.aktuellerSpieler;
+	}
 
-  @Override
-  public int getRoundId() {
-    return this.roundId;
-  }
+	@Override
+	public int getDiceNumber() {
+		return augenzahl;
+	}
 
-  @Override
-  public Spieler getCurrentPlayer() {
-    return this.currentPlayer;
-  }
+	@Override
+	public List<Spieler> allPlayers() {
+		return this.spielerliste;
+	}
 
-  @Override
-  public int getDiceNumber() {
-    return diceNumber;
-  }
+	@Override
+	public int getTriesLeft() {
+		return this.uebrigeVersuche;
+	}
 
-  @Override
-  public List<Spieler> allPlayers() {
-    return this.players;
-  }
+	@Override
+	public List<MoveOps> getMoveOps() {
+		return this.moeglicheSchritte;
+	}
 
-  @Override
-  public int getTriesLeft() {
-    return this.triesLeft;
-  }
+	// stattdessen rufen wir den getter getStartFeld auf
+	// private void initPlayingBoard() {
+	// int currentStartMark = 0;
+	// for (Spieler spieler : players) {
+	// spieler.setStartField(currentStartMark);
+	// currentStartMark += BOARD_SIZE / players.size();
+	// }
+	// }
 
-  @Override
-  public List<MoveOps> getMoveOps() {
-    return this.moveOpsList;
-  }
+	private boolean hasMoves() {
+		this.moeglicheSchritte.clear();
+		if (!istMinEineFigurAufSpielfeld()) {
+			if (augenzahl != 6)
+				return false;
+			setJailBreakMoveOps();
+		} else
+			berechneMoeglicheSchritte();
 
+		return true;
+	}
 
-  private void initPlayingBoard() {
-    int currentStartMark = 0;
-    for (Spieler pl : players) {
-      pl.setStartField(currentStartMark);
-      currentStartMark += BOARD_SIZE / players.size();
-    }
-  }
+	private boolean istMinEineFigurAufSpielfeld() {
+		for (Figur f : aktuellerSpieler.getFiguren()) {
+			if (!f.isHeimatsfeld())
+				return true;
+		}
+		return false;
+	}
 
-  private boolean hasMoves() {
-    this.moveOpsList.clear();
-    if (inJailBreak()) {
-      if (diceNumber != 6)
-        return false;
-      setJailBreakMoveOps();
-    } else
-      calculateMoveOps();
+	private void resetVariablenFuerNaechsteRunde() {
+		moeglicheSchritte.clear();
 
-    return true;
-  }
+		setNaechsteRunde();
+		setNaechsterSpieler();
 
-  private boolean inJailBreak() {
-    for (Figur f : currentPlayer.getFiguren()) {
-      if (f.getPosition() != HOME_POSITION)
-        return false;
-    }
-    return true;
-  }
+		setAnzahlVersuche();
+		// TODO wollen wir das behalten?
+		resetWuerfel();
+	}
 
-  private void prepareForNextRound() {
-    moveOpsList.clear();
+	private int getRandomDiceNumber() {
+		return new Random().nextInt(6) + 1;
+	}
 
-    setNextRound();
-    setNextRoundPlayer();
+	private void resetWuerfel() {
+		augenzahl = 0;
+	}
 
-    refreshTries();
-    refreshDice();
-  }
+	private void setNaechsteRunde() {
+		aktuelleRunde++;
+	}
 
-  private int getRandomDiceNumber() {
-    return new Random().nextInt(6) + 1;
-  }
+	private void setNaechsterSpieler() {
+		if (aktuellerSpieler == null) {
+			aktuellerSpieler = spielerliste.get(0);
+			return;
+		}
 
-  private void refreshDice() {
-    diceNumber = 0;
-  }
+		int nextId = (spielerliste.indexOf(aktuellerSpieler) + 1) % spielerliste.size();
+		aktuellerSpieler = spielerliste.get(nextId);
+	}
 
-  private void setNextRound() {
-    roundId++;
-  }
+	private void setAnzahlVersuche() {
+		if (!istMinEineFigurAufSpielfeld())
+			uebrigeVersuche = MAX_ANZAHL_VERSUCHE;
+		else
+			uebrigeVersuche = 1;
+	}
 
-  private void setNextRoundPlayer() {
-    if (currentPlayer == null) {
-      currentPlayer = players.get(0);
-      return;
-    }
+	private void berechneMoeglicheSchritte() {
+		// private Map<Figur, Integer> moeglicheSchritte;
+		int endposition;
+		boolean hasAtHome = false; // es sitzt eine figur auf dem heimatsfeld
 
-    int nextId = (players.indexOf(currentPlayer) + 1) % players.size();
-    currentPlayer = players.get(nextId);
-  }
+		if (augenzahl == 6) {
+			for (Figur f1 : aktuellerSpieler.getFiguren()) {
+				if (f1.isHeimatsfeld()) {
+					hasAtHome = true;
+					endposition = aktuellerSpieler.getStartFeld();
+				} else {
+					endposition = (f1.getPosition() + augenzahl) % SPIELFELDGROESSE;
+				}
 
-  private void refreshTries() {
-    if (inJailBreak())
-      triesLeft = MAX_NUMBER_OF_TRIES;
-    else
-      triesLeft = 1;
-  }
+				Figur f2 = figureByField.get(endposition);
+				this.moeglicheSchritte.add(new MoveOps(f1, f2, endposition));
+			}
+			// if (hasAtHome) {
+			// //wenn ni
+			// for (Iterator<MoveOps> iterator = moeglicheSchritte.iterator();
+			// iterator.hasNext();) {
+			// MoveOps opt = iterator.next();
+			// if (opt.figureAttacker.getPosition() != HOME_POSITION) {
+			// iterator.remove();
+			// }
+			// }
+			// }
 
-  private void calculateMoveOps() {
-    int destPosition;
-    boolean hasAtHome = false;
+		} else {
+			for (Figur f1 : aktuellerSpieler.getFiguren()) {
+				if (f1.getPosition() == HOME_POSITION)
+					continue;
 
-    if (diceNumber == 6) {
-      for (Figur f1 : currentPlayer.getFiguren()) {
-        if (f1.getPosition() == HOME_POSITION) {
-          hasAtHome = true;
-          destPosition = currentPlayer.getStartField();
-        } else {
-          destPosition = (f1.getPosition() + diceNumber) % BOARD_SIZE;
-        }
+				endposition = (f1.getPosition() + augenzahl) % SPIELFELDGROESSE;
+				Figur f2 = figureByField.get(endposition);
+				this.moeglicheSchritte.add(new MoveOps(f1, f2, endposition));
+			}
+		}
+	}
 
-        Figur f2 = figureByField.get(destPosition);
-        this.moveOpsList.add(new MoveOps(f1, f2, destPosition));
-      }
-      if (hasAtHome) {
-        for (Iterator<MoveOps> iterator = moveOpsList.iterator(); iterator.hasNext();) {
-          MoveOps opt = iterator.next();
-          if (opt.figureAttacker.getPosition() != HOME_POSITION) {
-            iterator.remove();
-          }
-        }
-      }
+	private void setJailBreakMoveOps() {
+		for (Figur f1 : aktuellerSpieler.getFiguren()) {
+			Figur f2 = figureByField.get(aktuellerSpieler.getStartFeld());
+			this.moeglicheSchritte.add(new MoveOps(f1, f2, aktuellerSpieler.getStartFeld()));
+		}
+	}
 
-    } else {
-      for (Figur f1 : currentPlayer.getFiguren()) {
-        if (f1.getPosition() == HOME_POSITION)
-          continue;
+	private void resolveFieldConflicts(Figur attackerFig, Figur defenderFig, int destField) {
+		if (defenderFig == null) {
 
-        destPosition = (f1.getPosition() + diceNumber) % BOARD_SIZE;
-        Figur f2 = figureByField.get(destPosition);
-        this.moveOpsList.add(new MoveOps(f1, f2, destPosition));
-      }
-    }
-  }
+			setFigureNewPosition(attackerFig, destField, true);
+			this.stateMachine.setState(State.S.InitialState);
+			resetVariablenFuerNaechsteRunde();
 
-  private void setJailBreakMoveOps() {
-    for (Figur f1 : currentPlayer.getFiguren()) {
-      Figur f2 = figureByField.get(currentPlayer.getStartField());
-      this.moveOpsList.add(new MoveOps(f1, f2, currentPlayer.getStartField()));
-    }
-  }
+		} else if (attackerFig.getPlayerId() != defenderFig.getPlayerId()) {
 
-  private void resolveFieldConflicts(Figur attackerFig, Figur defenderFig, int destField) {
-    if (defenderFig == null) {
+			this.moeglicheSchritte.clear();
+			this.moeglicheSchritte.add(new MoveOps(attackerFig, defenderFig, defenderFig.getPosition()));
 
-      setFigureNewPosition(attackerFig, destField, true);
-      this.stateMachine.setState(State.S.InitialState);
-      prepareForNextRound();
+			this.stateMachine.setState(State.S.ChooseQCategoryState);
+		} else {
+			applyCascadeResolution(attackerFig, defenderFig.getPosition());
+		}
+	}
 
-    } else if (attackerFig.getPlayerId() != defenderFig.getPlayerId()) {
+	private void applyCascadeResolution(Figur fig, int destField) {
+		Figur targetFig = figureByField.get(destField);
+		while (targetFig != null) {
+			destField = decreaseFieldNumb(destField);
+			targetFig = figureByField.get(destField);
+		}
 
-      this.moveOpsList.clear();
-      this.moveOpsList.add(new MoveOps(attackerFig, defenderFig, defenderFig.getPosition()));
+		setFigureNewPosition(fig, destField, false);
+		this.stateMachine.setState(State.S.InitialState);
+		resetVariablenFuerNaechsteRunde();
+	}
 
-      this.stateMachine.setState(State.S.ChooseQCategoryState);
-    } else {
-      applyCascadeResolution(attackerFig, defenderFig.getPosition());
-    }
-  }
+	private int decreaseFieldNumb(int destField) {
+		if (destField == 0)
+			return 47;
+		else
+			return --destField;
+	}
 
-  private void applyCascadeResolution(Figur fig, int destField) {
-    Figur targetFig = figureByField.get(destField);
-    while (targetFig != null) {
-      destField = decreaseFieldNumb(destField);
-      targetFig = figureByField.get(destField);
-    }
+	private Spieler getPlayerById(int playerId) {
+		for (Spieler pl : spielerliste) {
+			if (pl.getSpielerNummer() == playerId)
+				return pl;
+		}
+		return null;
+	}
 
-    setFigureNewPosition(fig, destField, false);
-    this.stateMachine.setState(State.S.InitialState);
-    prepareForNextRound();
-  }
+	private void setFigureNewPosition(Figur figure, int position, boolean withRemove) {
+		if (figure == null)
+			return;
 
-  private int decreaseFieldNumb(int destField) {
-    if (destField == 0)
-      return 47;
-    else
-      return --destField;
-  }
+		System.out.format("Replaced figure#%d of player#%d from %d to %d\n", figure.getFigurNummer(),
+				figure.getPlayerId(), figure.getPosition(), position);
 
-  private Spieler getPlayerById(int playerId) {
-    for (Spieler pl : players) {
-      if (pl.getSpielerNummer() == playerId)
-        return pl;
-    }
-    return null;
-  }
+		if (withRemove)
+			figureByField.remove(figure.getPosition());
 
-  private void setFigureNewPosition(Figur figure, int position, boolean withRemove) {
-    if (figure == null)
-      return;
+		getPlayerById(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
 
-    System.out.format("Replaced figure#%d of player#%d from %d to %d\n", figure.getFigurNummer(), figure.getPlayerId(),
-        figure.getPosition(), position);
+		Figur oldFig = figureByField.get(position);
+		if (oldFig != null)
+			figureByField.remove(position);
 
-    if (withRemove)
-      figureByField.remove(figure.getPosition());
+		figureByField.put(position, figure);
+	}
 
-    getPlayerById(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
+	// TODO: delete, for debugging
+	public void throwCheatDice(int cheatDice) {
+		uebrigeVersuche--;
+		augenzahl = cheatDice;
 
-    Figur oldFig = figureByField.get(position);
-    if (oldFig != null)
-      figureByField.remove(position);
+		if (hasMoves())
+			this.stateMachine.setState(State.S.WahlState);
+		else if (uebrigeVersuche == 0) {
+			this.stateMachine.setState(State.S.InitialState);
+			resetVariablenFuerNaechsteRunde();
+		} else {
+			this.stateMachine.setState(State.S.WurfState);
+		}
+	}
 
-    figureByField.put(position, figure);
-  }
-
-  //TODO: delete, for debugging
-  public void throwCheatDice(int cheatDice) {
-    triesLeft--;
-    diceNumber = cheatDice;
-
-    if (hasMoves())
-      this.stateMachine.setState(State.S.WahlState);
-    else if (triesLeft == 0) {
-      this.stateMachine.setState(State.S.InitialState);
-      prepareForNextRound();
-    } else {
-      this.stateMachine.setState(State.S.WurfState);
-    }
-  }
-
-  //TODO: delete, for debugging
-  public Figur getFigureByField(int pos) {
-    return this.figureByField.get(pos);
-  }
+	// TODO: delete, for debugging
+	public Figur getFigureByField(int pos) {
+		return this.figureByField.get(pos);
+	}
 
 }

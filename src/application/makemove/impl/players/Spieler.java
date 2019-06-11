@@ -39,7 +39,7 @@ public class Spieler {
 		return this.farben[this.spielerNummer];
 	}
 
-	public int getStartField() {
+	public int getStartFeld() {
 		return this.startFeld[this.spielerNummer];
 	}
 
