@@ -60,8 +60,9 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	 * falsche antwort: gegner auf heimatfeld
 	 */
 	@Override
-	public void bewegeFigur(Figur figur) {
-
+	public void bewegeFigur(int figurNummer) {
+		Figur figur = aktuellerSpieler.getFiguren()[figurNummer - 1];
+		
 		int aktuellesZiel = moeglicheSchritte.get(figur);
 		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
 		figur.setPosition(aktuellesZiel);
@@ -261,44 +262,25 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return null;
 	}
 
-	private void setFigureNewPosition(Figur figure, int position, boolean withRemove) {
-		if (figure == null)
-			return;
-
-		System.out.format("Replaced figure#%d of player#%d from %d to %d\n", figure.getFigurNummer(),
-				figure.getPlayerId(), figure.getPosition(), position);
-
-		if (withRemove)
-			figureByField.remove(figure.getPosition());
-
-		getSpielerNummer(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
-
-		Figur oldFig = figureByField.get(position);
-		if (oldFig != null)
-			figureByField.remove(position);
-
-		figureByField.put(position, figure);
-	}
-
-	// TODO: delete, for debugging
-	public void throwCheatDice(int cheatDice) {
-		anzahlWuerfe++;
-		augenzahl = cheatDice;
-
-		if (hasMoves())
-			this.stateMachine.setState(State.S.WahlState);
-		// TODO Überprüfen, ob es richtig ist
-		else if (anzahlWuerfe == 3) {
-			this.stateMachine.setState(State.S.InitialState);
-			resetVariablenFuerNaechsteRunde();
-		} else {
-			this.stateMachine.setState(State.S.WurfState);
-		}
-	}
-
-	// TODO: delete, for debugging
-	public Figur getFigureByField(int pos) {
-		return this.figureByField.get(pos);
-	}
+	// // TODO: delete, for debugging
+	// public void throwCheatDice(int cheatDice) {
+	// anzahlWuerfe++;
+	// augenzahl = cheatDice;
+	//
+	// if (hasMoves())
+	// this.stateMachine.setState(State.S.WahlState);
+	// // TODO Überprüfen, ob es richtig ist
+	// else if (anzahlWuerfe == 3) {
+	// this.stateMachine.setState(State.S.InitialState);
+	// resetVariablenFuerNaechsteRunde();
+	// } else {
+	// this.stateMachine.setState(State.S.WurfState);
+	// }
+	// }
+	//
+	// // TODO: delete, for debugging
+	// public Figur getFigureByField(int pos) {
+	// return this.figureByField.get(pos);
+	// }
 
 }

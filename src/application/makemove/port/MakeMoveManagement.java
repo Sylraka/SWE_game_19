@@ -16,7 +16,7 @@ public interface MakeMoveManagement {
 
 	void wuerfeln();
 
-	void bewegeFigur(Figur figur);
+	void bewegeFigur(int figurNummer);
 	
 	// TODO später löschen, interface aufräumen
 	// void chooseQuestionFromCategory(QuestionCategories qCat);
@@ -46,9 +46,9 @@ public interface MakeMoveManagement {
 	Spieler getGewinner();
 
 	// TODO: delete, for debugging
-	void throwCheatDice(int cheatDice);
+	//void throwCheatDice(int cheatDice);
 
 	// TODO: delete, for debugging
-	Figur getFigureByField(int pos);
+	//Figur getFigureByField(int pos);
 
 }
