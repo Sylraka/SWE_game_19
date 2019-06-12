@@ -28,7 +28,7 @@ private MakeMoveManagement model =  MakeMoveFactory.FACTORY.simpleManagerPort().
         preloaderStage.setResizable(false);
         preloaderStage.show();
         AlertBox.display("Spielstart","Neues Spiel wird geladen");
-        AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getCurrentPlayer().getSpielerName()));
+        AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getAktuellerSpieler().getSpielerName()));
 
    }
 }

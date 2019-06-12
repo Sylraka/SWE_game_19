@@ -38,17 +38,17 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public void startNewRound() {
+	public void neueRundeStarten() {
 		if (!this.stateMachine.getState().isSubStateOf(State.S.InitialState))
 			return;
-		this.moveManager.startNewRound();
+		this.moveManager.neueRundeStarten();
 	}
 
 	@Override
-	public void throwDice() {
+	public void wuerfeln() {
 		if (!this.stateMachine.getState().isSubStateOf(State.S.WurfState))
 			return;
-		this.moveManager.throwDice();
+		this.moveManager.wuerfeln();
 	}
 
 	@Override
@@ -60,28 +60,28 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 
 
 	@Override
-	public int getRoundId() {
-		return this.moveManager.getRoundId();
+	public int getAktuelleRunde() {
+		return this.moveManager.getAktuelleRunde();
 	}
 
 	@Override
-	public Spieler getCurrentPlayer() {
-		return this.moveManager.getCurrentPlayer();
+	public Spieler getAktuellerSpieler() {
+		return this.moveManager.getAktuellerSpieler();
 	}
 
 	@Override
-	public int getDiceNumber() {
-		return this.moveManager.getDiceNumber();
+	public int getAugenzahl() {
+		return this.moveManager.getAugenzahl();
 	}
 
 	@Override
-	public int getTriesLeft() {
-		return this.moveManager.getTriesLeft();
+	public int getUebrigeAnzahlVersuche() {
+		return this.moveManager.getUebrigeAnzahlVersuche();
 	}
 
 	@Override
-	public List<Spieler> allPlayers(){
-		return this.moveManager.allPlayers();
+	public List<Spieler> getSpielerliste(){
+		return this.moveManager.getSpielerliste();
 	}
 
 	@Override
@@ -90,17 +90,17 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	@Override
-	public void endGame(){
+	public void spielBeenden(){
 		if (!this.stateMachine.getState().isSubStateOf(State.S.EndGameState))
 			return;
-		this.moveManager.endGame();
+		this.moveManager.spielBeenden();
 	}
 
 	@Override
-	public Spieler getWinner(){
+	public Spieler getGewinner(){
 		if (!this.stateMachine.getState().isSubStateOf(State.S.EndGameState))
 			return null;
-		return this.moveManager.getWinner();
+		return this.moveManager.getGewinner();
 	}
 
 	//TODO: delete, for debugging only

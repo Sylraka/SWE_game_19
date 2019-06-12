@@ -12,11 +12,11 @@ import application.makemove.impl.players.Spieler;
 
 public interface MakeMoveManagement {
 
-	void startNewRound();
+	void neueRundeStarten();
 
-	void throwDice();
+	void wuerfeln();
 
-	void bewegeFigur(Figur figur, int optionId);
+	void bewegeFigur(Figur figur);
 	
 	// TODO später löschen, interface aufräumen
 	// void chooseQuestionFromCategory(QuestionCategories qCat);
@@ -25,25 +25,25 @@ public interface MakeMoveManagement {
 
 	// void selfAnswer(boolean isSelfAnswer);
 
-	int getRoundId();
+	int getAktuelleRunde();
 
-	int getDiceNumber();
+	int getAugenzahl();
 
-	int getTriesLeft();
+	int getUebrigeAnzahlVersuche();
 
-	List<Spieler> allPlayers();
+	List<Spieler> getSpielerliste();
 
-	Spieler getCurrentPlayer();
+	Spieler getAktuellerSpieler();
 
 	Map<Figur, Integer> getMoeglicheSchritte();
 
 	// Question getCurrentQuestion();
 
-	void endGame();
+	void spielBeenden();
 
 	// boolean isQuestionAnsweredCorrectly();
 
-	Spieler getWinner();
+	Spieler getGewinner();
 
 	// TODO: delete, for debugging
 	void throwCheatDice(int cheatDice);

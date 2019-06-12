@@ -41,64 +41,85 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	}
 
 	@Override
-	public void startNewRound() {
+	public void neueRundeStarten() {
 		this.stateMachine.setState(State.S.WurfState);
 	}
 
 	@Override
-	public void throwDice() {
+	public void wuerfeln() {
 		anzahlWuerfe++;
-		augenzahl = getRandomDiceNumber();
-
-		if (hasMoves())
-			this.stateMachine.setState(State.S.WahlState);
-		else if (anzahlWuerfe == 0) {
-			this.stateMachine.setState(State.S.InitialState);
-			resetVariablenFuerNaechsteRunde();
-		} else {
-			this.stateMachine.setState(State.S.WurfState);
-		}
+		augenzahl = getRandomAugenzahl();
+		berechneMoeglicheSchritte();
 	}
 
+	/**
+	 * hat der Spieler eine Figur ausgewählt, die er bewegen möchte, wird diese
+	 * methode aufgerufen um die figur auf diese position zu setzten. ist das feld
+	 * leer, wird er draufgesetzt ist das feld besetzt, wird eine frage gestellt
+	 * &spieler wird drauf gesetzt -> richtige antwort: gegner auf startfeld ->
+	 * falsche antwort: gegner auf heimatfeld
+	 */
 	@Override
 	public void bewegeFigur(Figur figur) {
-		schliesseRundeAb(figur);
+
+		int aktuellesZiel = moeglicheSchritte.get(figur);
+		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
+		figur.setPosition(aktuellesZiel);
+
+		if (spielerAufFeld == null) {
+			this.stateMachine.setState(State.S.InitialState);
+
+		} else {// auf dem feld sitzt eine andere figur
+
+			// wenn ein fight auftritt
+			// TODO das in die GUI verlagern
+			// TODO eine Wahl, ob die Frage richtig oder falsch beantwortet wurde
+			// implementieren
+			System.out.println("Hier wird eine Frage an Spieler " + spielerAufFeld.getSpielerName()
+					+ " gestellt, er hat die Frage falsch beantwortet");
+			// falsche antwort: defender wird aufs heimatfeld gesetzt
+			setFigurAufHeimatfeld(spielerAufFeld, aktuellesZiel);
+
+			this.moeglicheSchritte.clear();
+			this.stateMachine.setState(State.S.InitialState);
+		}
+		resetVariablenFuerNaechsteRunde();
 	}
 
 	@Override
-	public void endGame() {
-		// TODO: Switch to next use case (Statistics) in next Sprint
-		System.out.println("Game ended.");
+	public void spielBeenden() {
+		System.out.println("Das ist das Ende des Spiels, ich hoffe es hat euch spaß gemacht!");
 		System.exit(0);
 	}
 
+	// TODO löschen
 	@Override
-	public Spieler getWinner() {
+	public Spieler getGewinner() {
 		return this.gewinner;
 	}
 
 	@Override
-	public int getRoundId() {
+	public int getAktuelleRunde() {
 		return this.aktuelleRunde;
 	}
 
 	@Override
-	public Spieler getCurrentPlayer() {
+	public Spieler getAktuellerSpieler() {
 		return this.aktuellerSpieler;
 	}
 
 	@Override
-	public int getDiceNumber() {
+	public int getAugenzahl() {
 		return augenzahl;
 	}
 
 	@Override
-	public List<Spieler> allPlayers() {
+	public List<Spieler> getSpielerliste() {
 		return this.spielerliste;
 	}
 
 	@Override
-	public int getTriesLeft() {
+	public int getUebrigeAnzahlVersuche() {
 		return MAX_ANZAHL_VERSUCHE - this.anzahlWuerfe;
 	}
 
@@ -107,25 +128,20 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return this.moeglicheSchritte;
 	}
 
-	// stattdessen rufen wir den getter getStartFeld auf
-	// private void initPlayingBoard() {
-	// int currentStartMark = 0;
-	// for (Spieler spieler : players) {
-	// spieler.setStartField(currentStartMark);
-	// currentStartMark += BOARD_SIZE / players.size();
-	// }
-	// }
+	private int getRandomAugenzahl() {
+		return new Random().nextInt(6) + 1;
+	}
 
-	private boolean hasMoves() {
-		this.moeglicheSchritte.clear();
-		if (!istMinEineFigurAufSpielfeld()) {
-			if (augenzahl != 6)
-				return false;
-			setJailBreakMoveOps();
-		} else
-			berechneMoeglicheSchritte();
+	private void resetAnzahlWuerfe() {
+		anzahlWuerfe = 0;
+	}
 
-		return true;
+	private void resetWuerfel() {
+		augenzahl = 0;
+	}
+
+	private void setNaechsteRunde() {
+		aktuelleRunde++;
 	}
 
 	private boolean istMinEineFigurAufSpielfeld() {
@@ -142,55 +158,42 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		setNaechsteRunde();
 		setNaechsterSpieler();
 
-		setAnzahlVersuche();
+		resetAnzahlWuerfe();
 		// TODO wollen wir das behalten?
 		resetWuerfel();
-	}
-
-	private int getRandomDiceNumber() {
-		return new Random().nextInt(6) + 1;
-	}
-
-	private void resetWuerfel() {
-		augenzahl = 0;
-	}
-
-	private void setNaechsteRunde() {
-		aktuelleRunde++;
 	}
 
 	private void setNaechsterSpieler() {
 		if (aktuellerSpieler == null) {
 			aktuellerSpieler = spielerliste.get(0);
-			return;
+		} else {
+			int nextId = (spielerliste.indexOf(aktuellerSpieler) + 1) % spielerliste.size();
+			aktuellerSpieler = spielerliste.get(nextId);
 		}
-
-		int nextId = (spielerliste.indexOf(aktuellerSpieler) + 1) % spielerliste.size();
-		aktuellerSpieler = spielerliste.get(nextId);
 	}
 
 	private void berechneMoeglicheSchritte() {
 		// private Map<Figur, Integer> moeglicheSchritte;
-		int endposition;
-
+		berechneAnzahlFigurenAufHeimatsfeld();
 		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0) {
 			// dann setze die figur aufs startfeld
 
 			for (Figur figur : aktuellerSpieler.getFiguren()) {
+				// wähle figur aus, die vom heimatfeld aufs startfeld soll
 				if (figur.isHeimatsfeld()) {
 					moeglicheSchritte.put(figur, aktuellerSpieler.getStartFeld());
 				}
 			}
 			this.stateMachine.setState(State.S.WahlState);
-		} else {
+		} else { // augenzahl 1-5 oder alle figuren im spiel (keine auf heimatsfeld)
 			if (istEineFigurImSpiel()) {
-				// berechneMoeglicheSpielzüge(figurAktuellerSPieler)
+				// TODO berechneMoeglicheSpielzüge(figurAktuellerSPieler)
 				for (Figur figur : aktuellerSpieler.getFiguren()) {
 					if (!figur.isHeimatsfeld()) {
 						moeglicheSchritte.put(figur, (figur.getPosition() + augenzahl) % 48);
 					}
 				}
-				// TODO: Einfügen einfache Variente!!!
+				// TODO: Einfügen einfache Variante!!!
 				// if(einfacheVariante) {
 				//
 				// }
@@ -202,7 +205,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 				if (anzahlWuerfe == 3) {
 					this.stateMachine.setState(State.S.InitialState);
 				} else {
-					// aktuellerSpieler würfelt nochmal???
+					this.stateMachine.setState(State.S.WahlState);
 				}
 			}
 
@@ -223,13 +226,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		}
 	}
 
-	private void setJailBreakMoveOps() {
-		for (Figur f1 : aktuellerSpieler.getFiguren()) {
-			Figur f2 = figureByField.get(aktuellerSpieler.getStartFeld());
-			this.moeglicheSchritte.add(new MoveOps(f1, f2, aktuellerSpieler.getStartFeld()));
-		}
-	}
-
 	private Spieler getSpielerAufFeld(int position) {
 		for (Spieler spieler : spielerliste) {
 			for (Figur figur : spieler.getFiguren()) {
@@ -239,34 +235,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 			}
 		}
 		return null;
-	}
-
-	private void schliesseRundeAb(Figur figur) {
-
-		int aktuellesZiel = moeglicheSchritte.get(figur);
-		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
-
-		if (spielerAufFeld == null) {
-
-			figur.setPosition(aktuellesZiel);
-			this.stateMachine.setState(State.S.InitialState);
-			resetVariablenFuerNaechsteRunde();
-
-		} else {
-			// wenn ein fight auftritt
-			// TODO das in die GUI verlagern
-			// TODO eine Wahl, ob die Frage richtig oder falsch beantwortet wurde implementieren
-			System.out.println("Hier wird eine Frage an Spieler " + spielerAufFeld.getSpielerName()
-					+ " gestellt, er hat die Frage falsch beantwortet");
-			// falsche antwort: defender wird aufs heimatfeld gesetzt
-			setFigurAufHeimatfeld(spielerAufFeld, aktuellesZiel);
-
-			this.moeglicheSchritte.clear();
-			this.stateMachine.setState(State.S.InitialState);
-			// } else {
-			// applyCascadeResolution(attackerFig, defenderFig.getPosition());
-		}
-
 	}
 
 	private void setFigurAufHeimatfeld(Spieler spieler, int position) {
@@ -285,29 +253,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		}
 	}
 
-	private void applyCascadeResolution(Figur fig, int destField) {
-		Figur targetFig = figureByField.get(destField);
-		while (targetFig != null) {
-			destField = decreaseFieldNumb(destField);
-			targetFig = figureByField.get(destField);
-		}
-
-		setFigureNewPosition(fig, destField, false);
-		this.stateMachine.setState(State.S.InitialState);
-		resetVariablenFuerNaechsteRunde();
-	}
-
-	private int decreaseFieldNumb(int destField) {
-		if (destField == 0)
-			return 47;
-		else
-			return --destField;
-	}
-
-	private Spieler getPlayerById(int playerId) {
-		for (Spieler pl : spielerliste) {
-			if (pl.getSpielerNummer() == playerId)
-				return pl;
+	private Spieler getSpielerNummer(int SpielerNummer) {
+		for (Spieler spieler : spielerliste) {
+			if (spieler.getSpielerNummer() == SpielerNummer)
+				return spieler;
 		}
 		return null;
 	}
@@ -322,7 +271,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		if (withRemove)
 			figureByField.remove(figure.getPosition());
 
-		getPlayerById(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
+		getSpielerNummer(figure.getPlayerId()).getFiguren()[figure.getFigurNummer()].setPosition(position);
 
 		Figur oldFig = figureByField.get(position);
 		if (oldFig != null)

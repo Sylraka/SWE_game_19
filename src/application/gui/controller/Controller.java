@@ -59,14 +59,14 @@ public class Controller implements Initializable, Observer {
 
             loadOnScreenInfos();
             newGame = false;
-            this.model.startNewRound();
+            this.model.neueRundeStarten();
         }
 
         if (currentState == State.S.InitialState) {
             System.out.println(currentState);
-            AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getCurrentPlayer().getSpielerName()));
+            AlertBox.display("Spielstart",String.format("Zug von Spieler: %s", this.model.getAktuellerSpieler().getSpielerName()));
             loadOnScreenInfos();
-            this.model.startNewRound(); //need a better place
+            this.model.neueRundeStarten(); //need a better place
         }
 
         if (currentState == State.S.WahlState){
@@ -77,9 +77,9 @@ public class Controller implements Initializable, Observer {
     @FXML
     private void throwDice(ActionEvent event) {
             System.out.println(currentState);
-            this.model.throwDice();
-            textOutput.setText(String.format("Gewürfelt: %d", this.model.getDiceNumber()));
-            kek = String.format("Gewürfelt: %d", this.model.getDiceNumber());
+            this.model.wuerfeln();
+            textOutput.setText(String.format("Gewürfelt: %d", this.model.getAugenzahl()));
+            kek = String.format("Gewürfelt: %d", this.model.getAugenzahl());
 
             if (currentState == State.S.WahlState) {
                 loadChooseFiguresScene(event);
@@ -107,7 +107,7 @@ public class Controller implements Initializable, Observer {
 
         if (currentState == State.S.WurfState) {
 
-            System.out.println("Gewürfelt: " + this.model.getDiceNumber());
+            System.out.println("Gewürfelt: " + this.model.getAugenzahl());
             System.out.println(currentState);
         }
 
@@ -119,7 +119,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void loadOnScreenInfos() {
-        playerColor.setText(this.model.getCurrentPlayer().getSpielerName());
+        playerColor.setText(this.model.getAktuellerSpieler().getSpielerName());
         loadPlayerWsaInfo();
         loadPlayersFiguresInfo();
     }
@@ -154,7 +154,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void loadPlayerWsaInfo() {
-        Spieler player = this.model.getCurrentPlayer();
+        Spieler player = this.model.getAktuellerSpieler();
         wsaRed.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.RED).getLvl() + " von 4");
         wsaBlue.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.BLUE).getLvl() + " von 4");
         wsaGreen.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.GREEN).getLvl() + " von 4");
@@ -163,7 +163,7 @@ public class Controller implements Initializable, Observer {
 
     private void loadPlayersFiguresInfo() {
         String kek = "";
-        for (Spieler player : this.model.allPlayers()) {
+        for (Spieler player : this.model.getSpielerliste()) {
             for (Figur fg : player.getFiguren()) {
                 kek += String.format("F#%d: po = %d\t", fg.getFigurNummer(), fg.getPosition());
             }

@@ -55,7 +55,7 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.equals("t") && currentState == State.S.WurfState) {
-				this.model.throwDice();
+				this.model.wuerfeln();
 				continue;
 			}
 
@@ -65,7 +65,7 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.equals("y") && currentState == State.S.InitialState) {
-				this.model.startNewRound();
+				this.model.neueRundeStarten();
 				continue;
 			}
 
@@ -75,7 +75,7 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.matches("e") && currentState == State.S.EndGameState) {
-				this.model.endGame();
+				this.model.spielBeenden();
 			}
 		}
 	}
@@ -85,7 +85,7 @@ public class ConsoleIOHandler implements Observer {
 
 		//System.out.println("====================");
 		// System.out.println("State: " + currentState.toString());
-		System.out.println(this.model.getCurrentPlayer().getSpielerName() + " ist am Zug");
+		System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug");
 		
 		
 		// unsere states sind: initial, wurf, wahl, evtl end
@@ -96,7 +96,7 @@ public class ConsoleIOHandler implements Observer {
 
 		if (currentState == State.S.WurfState) {
 			posKeys = "";
-			System.out.println("Wurf: " + (3 - this.model.getTriesLeft()));
+			System.out.println("Wurf: " + (3 - this.model.getUebrigeAnzahlVersuche()));
 			//TODO variable, die hochzählt für anzahl würfe einführen
 		}
 
@@ -123,7 +123,7 @@ public class ConsoleIOHandler implements Observer {
 			return;
 
 		if (currentState == State.S.WurfState) {
-			System.out.println("Gewürfelte Zahl: " + this.model.getDiceNumber());
+			System.out.println("Gewürfelte Zahl: " + this.model.getAugenzahl());
 		}
 
 		currentState = newState;
@@ -175,7 +175,7 @@ public class ConsoleIOHandler implements Observer {
 	
 //TODO 
 	private void printFieldStatus() {
-		for (Spieler pl : this.model.allPlayers()) {
+		for (Spieler pl : this.model.getSpielerliste()) {
 			System.out.println("\n" + pl.getSpielerName() + ":\t");
 			for (Figur fg : pl.getFiguren()) {
 				System.out.format("Figur %d: Feld %d\n", fg.getFigurNummer(), fg.getPosition());
