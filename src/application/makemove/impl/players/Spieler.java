@@ -12,7 +12,7 @@ public class Spieler {
 	public Spieler(int spielerNummer) {
 		this.spielerNummer = spielerNummer;
 		// farbe/name wird abhängig von der Spielernummer aus dem String farben gesetzt
-		this.name = farben[spielerNummer - 1];
+		this.name = getFarbe();
 		setzeFiguren();
 	}
 
@@ -29,11 +29,11 @@ public class Spieler {
 	}
 
 	public String getFarbe() {
-		return this.farben[this.spielerNummer];
+		return this.farben[this.spielerNummer -1];
 	}
 
 	public int getStartFeld() {
-		return this.startFeld[this.spielerNummer];
+		return this.startFeld[this.spielerNummer -1];
 	}
 
 	public Figur[] getFiguren() {
