@@ -20,7 +20,6 @@ public class ConsoleIOHandler implements Observer {
     private State currentState;
 
     public ConsoleIOHandler() {
-        System.out.println("Started observer console");
         currentState = State.S.InitialState;
         this.model = MakeMoveFactory.FACTORY.simpleManagerPort().makeMoveManagement(null);
         MVCPort mvcPort = LogicFactory.FACTORY.MVCPort();
@@ -30,6 +29,9 @@ public class ConsoleIOHandler implements Observer {
 
     //TODO einfache Variante auswählen -> ein button hinzufügen
     private void initComponents() {
+        System.out.println("Viel Spaß bei unserem Spiel! :)");
+        System.out.println("Anzahl der Spieler: " + model.getSpielerliste().size() + "\n");
+        
         getInput();
     }
 
@@ -44,6 +46,7 @@ public class ConsoleIOHandler implements Observer {
             } catch (IOException e) {
                 System.out.println("EXCEPTION");
             }
+            
 
             if (str.equals("w") && currentState == State.S.WurfState) {
                 this.model.wuerfeln();
@@ -54,12 +57,11 @@ public class ConsoleIOHandler implements Observer {
 				this.model.throwCheatDice(Integer.parseInt(str));
 				continue;
 			}*/
-/*
-            if (str.equals("y") && currentState == State.S.InitialState) {
-            //TODO noch hinzufügen
+
+            if (str.equals("s") && currentState == State.S.InitialState) {
                 this.model.neueRundeStarten();
                 continue;
-            }*/
+            }
 
             if (str.matches(".*\\d+.*") && currentState == State.S.WahlState) {
                 this.model.bewegeFigur(Integer.parseInt(str));
@@ -76,6 +78,10 @@ public class ConsoleIOHandler implements Observer {
         System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug\n");
         printFieldStatus();
 
+        if (currentState == State.S.InitialState) {
+            System.out.println("Zum Starten drücken Sie 's'");
+        }
+        
         if (currentState == State.S.WurfState) {
             System.out.println("Verbleibende Versuche: " + (this.model.getUebrigeAnzahlVersuche()));
             System.out.println("Zum Würfeln drücken Sie 'w'");
@@ -109,11 +115,9 @@ public class ConsoleIOHandler implements Observer {
         Spieler spieler = this.model.getAktuellerSpieler();
         System.out.println("Mögliche Bewegungen:");
         for (Figur figur : spieler.getFiguren()) {
-            if (figur.getPosition() != -1) {
                 System.out.println("\t Figur " +
-                        figur.getFigurNummer() + " von Feld " + figur.getPosition() + " auf Feld " +
+                		(figur.getFigurNummer()+1) + " von Feld " + figur.getPosition() + " auf Feld " +
                         this.model.getMoeglicheSchritte().get(figur));
-            }
         }
     }
 
@@ -134,7 +138,7 @@ public class ConsoleIOHandler implements Observer {
             int figurenCounter = 0;
             for (Figur figur : spieler.getFiguren()) {
                 if (figur.getPosition() != -1) {
-                    figurenImSpielAusgabe += "\t Figur " + figur.getFigurNummer() + " Feld " + figur.getPosition() + "\n";
+                    figurenImSpielAusgabe += "\t Figur " + (figur.getFigurNummer()+1) + " Feld " + figur.getPosition() + "\n";
                     figurenCounter++;
                 }
             }
