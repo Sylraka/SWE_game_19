@@ -31,6 +31,8 @@ public interface MakeMoveManagement {
 
 	int getUebrigeAnzahlVersuche();
 
+	boolean istEinfacheVariante();
+
 	List<Spieler> getSpielerliste();
 
 	Spieler getAktuellerSpieler();

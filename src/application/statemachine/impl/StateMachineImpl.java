@@ -53,5 +53,4 @@ public class StateMachineImpl implements StateMachine, Subject {
 		this.currentState = state;
 		this.observers.forEach(obs -> obs.update(state));
 	}
-
 }

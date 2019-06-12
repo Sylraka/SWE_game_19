@@ -101,6 +101,12 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	public Map<Figur, Integer> getMoeglicheSchritte() {
 		return this.moveManager.getMoeglicheSchritte();
 	};
+
+	@Override
+	public boolean istEinfacheVariante() {
+		return this.moveManager.istEinfacheVariante();
+	}
+
 	// TODO: delete, for debugging only
 	// @Override
 	// public void throwCheatDice(int cheatDice){
