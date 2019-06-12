@@ -1,16 +1,14 @@
 package application.logic;
 
-import application.statemachine.StateMachineFactory;
-import application.makemove.port.MakeMoveManagement;
-import application.logic.port.ManagerPort;
-import application.logic.port.MVCPort;
-
 import java.util.List;
 
-import application.logic.LogicFactory;
+import application.logic.port.MVCPort;
+import application.logic.port.ManagerPort;
 import application.makemove.MakeMoveFactory;
 import application.makemove.impl.players.Spieler;
+import application.makemove.port.MakeMoveManagement;
 import application.makemove.port.SimpleManagerPort;
+import application.statemachine.StateMachineFactory;
 import application.statemachine.port.Subject;
 import application.statemachine.port.SubjectPort;
 

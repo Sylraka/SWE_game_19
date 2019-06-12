@@ -1,18 +1,18 @@
 package application.gui;
 
 
-import application.makemove.impl.players.Figur;
-import application.makemove.impl.players.Spieler;
-import application.logic.LogicFactory;
-import application.logic.port.MVCPort;
-import application.statemachine.port.State;
-import application.makemove.MakeMoveFactory;
-import application.makemove.port.MakeMoveManagement;
-import application.statemachine.port.Observer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import application.logic.LogicFactory;
+import application.logic.port.MVCPort;
+import application.makemove.MakeMoveFactory;
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
+import application.makemove.port.MakeMoveManagement;
+import application.statemachine.port.Observer;
+import application.statemachine.port.State;
 
 public class ConsoleIOHandler implements Observer {
 
@@ -73,7 +73,7 @@ public class ConsoleIOHandler implements Observer {
     }
 
     private void printEingabemoeglichkeiten() {
-        System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug");
+        System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug\n");
         printFieldStatus();
 
         if (currentState == State.S.WurfState) {

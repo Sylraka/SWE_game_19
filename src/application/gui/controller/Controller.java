@@ -1,12 +1,14 @@
 package application.gui.controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import application.logic.LogicFactory;
-import application.logic.LogicFactoryImpl;
 import application.logic.port.MVCPort;
 import application.makemove.MakeMoveFactory;
 import application.makemove.impl.players.Figur;
 import application.makemove.impl.players.Spieler;
-import application.makemove.impl.questions.KnowledgeLevel;
 import application.makemove.port.MakeMoveManagement;
 import application.statemachine.port.Observer;
 import application.statemachine.port.State;
@@ -17,18 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-
-import javax.swing.*;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
 
 public class Controller implements Initializable, Observer {
 
@@ -155,10 +149,10 @@ public class Controller implements Initializable, Observer {
 
     private void loadPlayerWsaInfo() {
         Spieler player = this.model.getAktuellerSpieler();
-        wsaRed.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.RED).getLvl() + " von 4");
-        wsaBlue.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.BLUE).getLvl() + " von 4");
-        wsaGreen.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.GREEN).getLvl() + " von 4");
-        wsaYellow.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.YELLOW).getLvl() + " von 4");
+//        wsaRed.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.RED).getLvl() + " von 4");
+//        wsaBlue.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.BLUE).getLvl() + " von 4");
+//        wsaGreen.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.GREEN).getLvl() + " von 4");
+//        wsaYellow.setText(player.getKnowledgeLevelsByCategory(KnowledgeLevel.QuestionCategories.YELLOW).getLvl() + " von 4");
     }
 
     private void loadPlayersFiguresInfo() {

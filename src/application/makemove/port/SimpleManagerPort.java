@@ -1,7 +1,8 @@
 package application.makemove.port;
 
-import application.makemove.impl.players.Spieler;
 import java.util.List;
+
+import application.makemove.impl.players.Spieler;
 
 public interface SimpleManagerPort {
 

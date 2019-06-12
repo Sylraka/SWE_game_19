@@ -1,15 +1,15 @@
 package application.makemove.impl;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import application.makemove.impl.players.Figur;
+import application.makemove.impl.players.Spieler;
+import application.makemove.port.MakeMoveManagement;
 import application.statemachine.port.State;
 import application.statemachine.port.StateMachine;
 import application.statemachine.port.StateMachinePort;
-import application.makemove.port.MakeMoveManagement;
-import application.makemove.impl.players.Figur;
-import application.makemove.impl.players.Spieler;
 
 public class MakeMoveManagementImpl implements MakeMoveManagement {
     private static final int MAX_ANZAHL_VERSUCHE = 3;
