@@ -111,7 +111,7 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 		this.moveManager.frageBeantworten(isRichtig);
 	}
 	
-	// TODO: delete, for debugging only
+	// TODO: Für Testzwecke
 	@Override
 	public void zahlWuerfeln(int augenzahl) {
 		if (!this.stateMachine.getState().isSubStateOf(State.S.WurfState))

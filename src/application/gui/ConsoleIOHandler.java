@@ -27,7 +27,6 @@ public class ConsoleIOHandler implements Observer {
 		initComponents();
 	}
 
-	// TODO einfache Variante auswählen -> ein button hinzufügen
 	private void initComponents() {
 		System.out.println("Viel Spaß bei unserem Spiel! :)");
 		System.out.println("Anzahl der Spieler: " + model.getSpielerliste().size() + "\n");

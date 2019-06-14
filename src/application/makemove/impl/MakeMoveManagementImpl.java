@@ -161,14 +161,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		aktuelleRunde++;
 	}
 
-	private boolean istMinEineFigurAufSpielfeld() {
-		for (Figur f : aktuellerSpieler.getFiguren()) {
-			if (!f.isHeimatsfeld())
-				return true;
-		}
-		return false;
-	}
-
 	private void resetVariablenFuerNaechsteRunde() {
 		moeglicheSchritte.clear();
 
@@ -176,7 +168,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		setNaechsterSpieler();
 
 		resetAnzahlWuerfe();
-		// TODO wollen wir das behalten?
 		resetWuerfel();
 	}
 
@@ -272,15 +263,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return null;
 	}
 
-	private Spieler getSpielerNummer(int SpielerNummer) {
-		for (Spieler spieler : spielerliste) {
-			if (spieler.getSpielerNummer() == SpielerNummer)
-				return spieler;
-		}
-		return null;
-	}
-
-	// TODO: delete, for debugging
+	// TODO: Für Testzwecke
 	public void zahlWuerfeln(int augenzahl) {
 		anzahlWuerfe++;
 		this.augenzahl = augenzahl;

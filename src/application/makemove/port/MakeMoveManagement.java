@@ -18,13 +18,6 @@ public interface MakeMoveManagement {
 
 	void bewegeFigur(int figurNummer);
 	
-	// TODO später löschen, interface aufräumen
-	// void chooseQuestionFromCategory(QuestionCategories qCat);
-
-	// void answerQuestion(int answer);
-
-	// void selfAnswer(boolean isSelfAnswer);
-
 	int getAktuelleRunde();
 
 	int getAugenzahl();
@@ -39,17 +32,13 @@ public interface MakeMoveManagement {
 
 	Map<Figur, Integer> getMoeglicheSchritte();
 
-	// Question getCurrentQuestion();
-
 	void spielBeenden();
-
-	// boolean isQuestionAnsweredCorrectly();
 
 	Spieler getGewinner();
 	
 	void frageBeantworten(boolean isRichtig);
 
-//	 TODO: delete, for debugging
+//	 TODO: Für Testzwecke
 	void zahlWuerfeln(int augenzahl);
 
 }
