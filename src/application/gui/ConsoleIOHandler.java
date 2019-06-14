@@ -162,7 +162,7 @@ public class ConsoleIOHandler implements Observer {
 		for (Figur figur : spieler.getFiguren()) {
 			if (this.model.getMoeglicheSchritte().get(figur) != null) {
 				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1)
-						+ ((figur.getPosition() == -1) ? " vom Heimatsfeld" : (" von Feld" + figur.getPosition()))  +" auf Feld "
+						+ ((figur.getPosition() == -1) ? " vom Heimatsfeld" : (" von Feld " + figur.getPosition()))  +" auf Feld "
 						+ this.model.getMoeglicheSchritte().get(figur));
 			}
 		}
