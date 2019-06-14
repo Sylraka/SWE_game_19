@@ -85,7 +85,7 @@ public class ConsoleIOHandler implements Observer {
 				if (figurnummer > 0 && figurnummer < 4 && isBewegungErlaubt(figurnummer)) {
 					this.model.bewegeFigur(figurnummer);
 				} else {
-					System.err.println("Fehlerhafte Zahl bitte versuchen Sie es erneut.\n");
+					System.err.println("Fehlerhafte Zahl! Bitte nochmal würfeln!\n");
 				}
 				continue;
 			}
@@ -93,7 +93,7 @@ public class ConsoleIOHandler implements Observer {
 			// TODO: Im finalen Produkt sollte das nur im Zustand EndState funktionieren
 			// if (str.matches("e") && currentState == State.S.EndState) {
 			if (str.matches("e")) {
-				System.out.println("Das Spiel wurde beendet.\nVielen Dank fürs Spielen!");
+				System.out.println("Das Spiel wurde beendet.\nEmpfehlt und weiter :) Für Kritik einfach jetzt sprechen.");
 				this.model.spielBeenden();
 				System.out.println("Test");
 			}

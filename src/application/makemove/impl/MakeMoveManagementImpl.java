@@ -94,6 +94,9 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	@Override
 	public void frageBeantworten(boolean isRichtig) {
 		if (isRichtig) {
+			if (eigeneFigurAufStartfeld()) {
+				setFigurAufHeimatfeld(verteidiger);
+			}
 			setFigurAufStartfeld(verteidiger);
 		} else {
 			setFigurAufHeimatfeld(verteidiger);
@@ -185,7 +188,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		}
 	}
 
-	private boolean eineEigeneFigurAufStartfeld() {
+	private boolean eigeneFigurAufStartfeld() {
 		int startfeld = aktuellerSpieler.getStartFeld();
 
 		for (Figur figur : aktuellerSpieler.getFiguren()) {
@@ -200,14 +203,9 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		// private Map<Figur, Integer> moeglicheSchritte;
 		berechneAnzahlFigurenAufHeimatsfeld();
 
-		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0 && !eineEigeneFigurAufStartfeld()) {
+		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0 && !eigeneFigurAufStartfeld()) {
 			// dann setze die figur aufs startfeld
-
-			// wenn dein startfeld besetzt ist
-			// von einem anderen spieler, dann frage ihn etwas
-			// von einer eigenen figur, dann darfst du nicht ziehen,
-			// dafür darfst du aber mit einer figur, die draussen ist ziehen
-
+			
 			for (Figur figur : aktuellerSpieler.getFiguren()) {
 				// wähle figur aus, die vom heimatfeld aufs startfeld soll
 				if (figur.isHeimatsfeld()) {
