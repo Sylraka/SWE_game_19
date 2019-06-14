@@ -60,12 +60,23 @@ public class ConsoleIOHandler implements Observer {
 				} else {
 					this.model.zahlWuerfeln(augenzahl);
 				}
-
 				continue;
 			}
 
 			if (str.equals("s") && currentState == State.S.InitialState) {
 				this.model.neueRundeStarten();
+				continue;
+			}
+
+			if (str.equals("f") && currentState == State.S.FrageState) {
+				System.out.println("Die Frage wurde falsch beantwortet, die Figur wird auf ihr Heimatsfeld gesetzt.");
+				this.model.frageBeantworten(false);
+				continue;
+			}
+
+			if (str.equals("r") && currentState == State.S.FrageState) {
+				System.out.println("Die Frage wurde richtig beantwortet, die Figur wird auf ihr Startfeld gesetzt.");
+				this.model.frageBeantworten(true);
 				continue;
 			}
 
@@ -120,6 +131,11 @@ public class ConsoleIOHandler implements Observer {
 		if (currentState == State.S.WurfState) {
 			System.out.println("Verbleibende Versuche: " + (this.model.getUebrigeAnzahlVersuche()));
 			System.out.println("Zum Würfeln drücken Sie 'w'");
+		}
+
+		if (currentState == State.S.FrageState) {
+			System.out.println(
+					"Es wird eine Frage gestellt, soll diese richtig ('r') oder falsch ('f') beantwortet werden?");
 		}
 
 		if (currentState == State.S.WahlState) {

@@ -107,6 +107,10 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 		return this.moveManager.istEinfacheVariante();
 	}
 
+	public void frageBeantworten(boolean isRichtig) {
+		this.moveManager.frageBeantworten(isRichtig);
+	}
+	
 	// TODO: delete, for debugging only
 	@Override
 	public void zahlWuerfeln(int augenzahl) {

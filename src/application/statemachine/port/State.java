@@ -11,10 +11,9 @@ public interface State {
 	public boolean isSuperStateOf(State state);
 
 	public enum S implements State {
-		InitialState, WurfState, WahlState, EndGameState,
-		//TODO letzte zeile brauchen wir eig nicht, delete später
-		ChooseQCategoryState, AnswerQState;
-		//IsSelfAnswer;
+		InitialState, WurfState, WahlState, 
+		//Folgende Zustände bisher nur für Testzwecke implementiert
+		EndGameState, FrageState;
 		
 
 

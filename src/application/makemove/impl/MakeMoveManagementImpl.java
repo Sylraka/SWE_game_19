@@ -25,7 +25,8 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	private Spieler aktuellerSpieler;
 	private Spieler gewinner;
 	private int anzahlFigurenAufHeimatsfeld = 0;
-
+	private Figur verteidiger;
+	private Spieler verteidigerSpieler;
 
 	// für die Figur, wohin sie sich bewegen kann in diesem Zug, int = Endpunkt
 	private Map<Figur, Integer> moeglicheSchritte = new HashMap<Figur, Integer>();
@@ -47,8 +48,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	@Override
 	public void wuerfeln() {
 		anzahlWuerfe++;
-		setCheatWuerfel(6);
-		// augenzahl = getRandomAugenzahl();
+		augenzahl = getRandomAugenzahl();
 		berechneMoeglicheSchritte();
 	}
 
@@ -65,26 +65,38 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 		int aktuellesZiel = moeglicheSchritte.get(figur);
 		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
-		figur.setPosition(aktuellesZiel);
 
 		if (spielerAufFeld == null) {
+			resetVariablenFuerNaechsteRunde();
 			this.stateMachine.setState(State.S.InitialState);
-
-		} else {// auf dem feld sitzt eine andere figur
-
-			// wenn ein fight auftritt
-			// TODO das in die GUI verlagern
-			// TODO eine Wahl, ob die Frage richtig oder falsch beantwortet wurde
-			// implementieren
-			System.out.println("Hier wird eine Frage an Spieler " + spielerAufFeld.getSpielerName()
-					+ " gestellt, er hat die Frage falsch beantwortet");
-			// falsche antwort: defender wird aufs heimatfeld gesetzt
-			setFigurAufHeimatfeld(spielerAufFeld, aktuellesZiel);
-
-			this.moeglicheSchritte.clear();
-			this.stateMachine.setState(State.S.InitialState);
+		} else {
+			// Auf dem Feld sitzt eine andere Figur
+			// Verteidiger wird zwischengespeichert
+			for (Spieler verteidigerSpieler : spielerliste) {
+				for (Figur verteidiger : verteidigerSpieler.getFiguren()) {
+					if (verteidiger.getPosition() == aktuellesZiel) {
+						this.verteidiger = verteidiger;
+						this.verteidigerSpieler = verteidigerSpieler;
+					}
+				}
+			}
+			this.stateMachine.setState(State.S.FrageState);
 		}
+		figur.setPosition(aktuellesZiel);
+
+	}
+
+	@Override
+	public void frageBeantworten(boolean isRichtig) {
+		if (isRichtig) {
+			setFigurAufStartfeld(verteidiger);
+		} else {
+			setFigurAufHeimatfeld(verteidiger);
+		}
+
 		resetVariablenFuerNaechsteRunde();
+		this.moeglicheSchritte.clear();
+		this.stateMachine.setState(State.S.InitialState);
 	}
 
 	@Override
@@ -92,7 +104,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		System.exit(0);
 	}
 
-	// TODO löschen
+	// Nur für Testzwecke, nicht implementiert
 	@Override
 	public Spieler getGewinner() {
 		return this.gewinner;
@@ -135,11 +147,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 	private int getRandomAugenzahl() {
 		return new Random().nextInt(6) + 1;
-	}
-
-	// TODO: delete, for debugging
-	public void setCheatWuerfel(int cheatAugenzahl) {
-		augenzahl = cheatAugenzahl;
 	}
 
 	private void resetAnzahlWuerfe() {
@@ -236,6 +243,15 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return anzahlFigurenAufHeimatsfeld < 3;
 	}
 
+	private void setFigurAufHeimatfeld(Figur verteidiger) {
+		verteidiger.setPosition(-1);
+	}
+
+	private void setFigurAufStartfeld(Figur verteidiger) {
+		verteidiger.setPosition(verteidigerSpieler.getStartFeld());
+
+	}
+
 	private void berechneAnzahlFigurenAufHeimatsfeld() {
 		anzahlFigurenAufHeimatsfeld = 0;
 		for (Figur figur : aktuellerSpieler.getFiguren()) {
@@ -254,22 +270,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 			}
 		}
 		return null;
-	}
-
-	private void setFigurAufHeimatfeld(Spieler spieler, int position) {
-		for (Figur figur : spieler.getFiguren()) {
-			if (figur.getPosition() == position) {
-				figur.setPosition(-1);
-			}
-		}
-	}
-
-	private void setFigurAufStartfeld(Spieler spieler, int position) {
-		for (Figur figur : spieler.getFiguren()) {
-			if (figur.getPosition() == position) {
-				figur.setPosition(spieler.getStartFeld());
-			}
-		}
 	}
 
 	private Spieler getSpielerNummer(int SpielerNummer) {

@@ -46,6 +46,8 @@ public interface MakeMoveManagement {
 	// boolean isQuestionAnsweredCorrectly();
 
 	Spieler getGewinner();
+	
+	void frageBeantworten(boolean isRichtig);
 
 //	 TODO: delete, for debugging
 	void zahlWuerfeln(int augenzahl);
