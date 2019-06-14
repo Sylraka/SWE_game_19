@@ -13,6 +13,7 @@ import application.statemachine.port.StateMachine;
 import application.statemachine.port.StateMachinePort;
 
 public class MakeMoveManagementImpl implements MakeMoveManagement {
+	private final boolean einfacheVariante = true;
 	private static final int MAX_ANZAHL_VERSUCHE = 3;
 	private static final int SPIELFELDGROESSE = 48;
 	private final List<Spieler> spielerliste;
@@ -24,7 +25,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	private Spieler aktuellerSpieler;
 	private Spieler gewinner;
 	private int anzahlFigurenAufHeimatsfeld = 0;
-	private boolean einfacheVariante = false;
+
 
 	// für die Figur, wohin sie sich bewegen kann in diesem Zug, int = Endpunkt
 	private Map<Figur, Integer> moeglicheSchritte = new HashMap<Figur, Integer>();

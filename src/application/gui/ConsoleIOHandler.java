@@ -3,6 +3,7 @@ package application.gui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import application.logic.LogicFactory;
 import application.logic.port.MVCPort;
@@ -52,7 +53,14 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.matches(".*\\d+.*") && currentState == State.S.WurfState) {
-				this.model.zahlWuerfeln(Integer.parseInt(str));
+				int augenzahl = Integer.parseInt(str);
+				if (augenzahl > 6 || augenzahl < 1) {
+					System.err.println(
+							"Fehlerhafte Zahl bitte versuchen Sie es erneut.\n(Geben Sie eine Zahl von 1 bis 6 ein)");
+				} else {
+					this.model.zahlWuerfeln(augenzahl);
+				}
+
 				continue;
 			}
 
@@ -62,7 +70,13 @@ public class ConsoleIOHandler implements Observer {
 			}
 
 			if (str.matches(".*\\d+.*") && currentState == State.S.WahlState) {
-				this.model.bewegeFigur(Integer.parseInt(str));
+				int figurnummer = Integer.parseInt(str);
+
+				if (figurnummer > 0 && figurnummer < 4 && isBewegungErlaubt(figurnummer)) {
+					this.model.bewegeFigur(figurnummer);
+				} else {
+					System.err.println("Fehlerhafte Zahl bitte versuchen Sie es erneut.\n");
+				}
 				continue;
 			}
 
@@ -70,6 +84,16 @@ public class ConsoleIOHandler implements Observer {
 				this.model.spielBeenden();
 			}
 		}
+	}
+
+	private boolean isBewegungErlaubt(int figurnummer) {
+		// Prüfe ob ausgewählte Figur in den erlaubten Schritten ist
+		for (Map.Entry<Figur, Integer> schritt : model.getMoeglicheSchritte().entrySet()) {
+			if (schritt.getKey().getFigurNummer() + 1 == figurnummer) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void printEingabemoeglichkeiten() {
@@ -97,7 +121,7 @@ public class ConsoleIOHandler implements Observer {
 		if (currentState == State.S.WahlState) {
 
 			printMoeglicheBewegungen();
-			System.out.format("\nGeben Sie die Nummer der zu bewegenden Figur ein.");
+			System.out.format("\nGeben Sie die Nummer der zu bewegenden Figur ein.\n");
 		}
 
 		if (currentState == State.S.EndGameState) {
@@ -119,8 +143,8 @@ public class ConsoleIOHandler implements Observer {
 		for (Figur figur : spieler.getFiguren()) {
 			if (this.model.getMoeglicheSchritte().get(figur) != null) {
 				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1) + " von "
-						+ ((figur.getPosition() == -1) ? " Heimatsfeld" : (" Feld " + figur.getPosition()))
-						+ " auf Feld " + this.model.getMoeglicheSchritte().get(figur));
+						+ ((figur.getPosition() == -1) ? "Heimatsfeld" : ("Feld " + figur.getPosition())) + " auf Feld "
+						+ this.model.getMoeglicheSchritte().get(figur));
 			}
 		}
 	}
