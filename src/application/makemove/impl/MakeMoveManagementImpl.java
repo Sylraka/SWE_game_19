@@ -195,7 +195,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 				// TODO berechneMoeglicheSpielzüge(figurAktuellerSPieler)
 				for (Figur figur : aktuellerSpieler.getFiguren()) {
 					if (!figur.isHeimatsfeld()) {
-						moeglicheSchritte.put(figur, (figur.getPosition() + augenzahl) % 48);
+						moeglicheSchritte.put(figur, (figur.getPosition() + augenzahl) % SPIELFELDGROESSE);
 					}
 				}
 				if (!einfacheVariante) {

@@ -31,10 +31,10 @@ public class ConsoleIOHandler implements Observer {
 		System.out.println("Viel Spaß bei unserem Spiel! :)");
 		System.out.println("Anzahl der Spieler: " + model.getSpielerliste().size() + "\n");
 
-		getInput();
+		getEingabe();
 	}
 
-	private void getInput() {
+	private void getEingabe() {
 		String str = new String();
 		BufferedReader in;
 		while (true) {
@@ -81,6 +81,10 @@ public class ConsoleIOHandler implements Observer {
 		System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug\n");
 		printFigurenPositionen();
 
+		if (this.model.getAugenzahl() > 0) {
+			System.out.println("Gewürfelte Zahl: " + this.model.getAugenzahl() + "\n");
+		}
+
 		if (currentState == State.S.InitialState) {
 			System.out.println("Zum Starten drücken Sie 's'");
 		}
@@ -93,22 +97,18 @@ public class ConsoleIOHandler implements Observer {
 		if (currentState == State.S.WahlState) {
 
 			printMoeglicheBewegungen();
-			System.out.format("Figur zum Bewegen auswählen\n" + "Geben Sie die Figurnummer ein.");
+			System.out.format("\nGeben Sie die Nummer der zu bewegenden Figur ein.");
 		}
 
 		if (currentState == State.S.EndGameState) {
 			System.out.println("Winner: " + this.model.getGewinner().getSpielerName());
-			System.out.println("Drücke e zum Beenden des Speieles");
+			System.out.println("Drücke e zum Beenden des Spieles");
 		}
 	}
 
 	public void update(State newState) {
 		if (newState == null)
 			return;
-
-		if (currentState == State.S.WurfState) {
-			System.out.println("Gewürfelte Zahl: " + this.model.getAugenzahl());
-		}
 
 		currentState = newState;
 	}
@@ -118,22 +118,12 @@ public class ConsoleIOHandler implements Observer {
 		System.out.println("Mögliche Bewegungen:");
 		for (Figur figur : spieler.getFiguren()) {
 			if (this.model.getMoeglicheSchritte().get(figur) != null) {
-				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1) + " von Feld " + figur.getPosition()
+				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1) + " von "
+						+ ((figur.getPosition() == -1) ? " Heimatsfeld" : (" Feld " + figur.getPosition()))
 						+ " auf Feld " + this.model.getMoeglicheSchritte().get(figur));
 			}
 		}
 	}
-
-	// private void printQuestion() {
-	// Question curQ = this.model.getCurrentQuestion();
-	// System.out.println("*******Question******");
-	// System.out.format("%s\nAnswers:\n", curQ.getQuestionBody());
-	//
-	// for (int i = 0; i < curQ.getAnswers().length; i++)
-	// System.out.format("#%d: %s\n", i, curQ.getAnswers()[i]);
-	//
-	// System.out.println("*******Question******");
-	// }
 
 	private void printFigurenPositionen() {
 		for (Spieler spieler : this.model.getSpielerliste()) {
@@ -142,8 +132,8 @@ public class ConsoleIOHandler implements Observer {
 			for (Figur figur : spieler.getFiguren()) {
 
 				if (figur.getPosition() != -1) {
-					figurenImSpielAusgabe += "\t Figur " + (figur.getFigurNummer() + 1) + " Feld "
-							+ ((figur.getPosition() == -1)? "Heimatsfeld" : figur.getPosition()) + "\n";
+					figurenImSpielAusgabe += "\t Figur " + (figur.getFigurNummer() + 1) + " Feld " + figur.getPosition()
+							+ "\n";
 					figurenCounter++;
 				}
 			}
