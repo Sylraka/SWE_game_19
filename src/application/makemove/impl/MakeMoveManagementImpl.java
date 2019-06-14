@@ -66,15 +66,20 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		int aktuellesZiel = moeglicheSchritte.get(figur);
 		Spieler spielerAufFeld = getSpielerAufFeld(aktuellesZiel);
 
-		if (spielerAufFeld == null) {
+		if (spielerAufFeld == null) { // auf dem Feld sitzt keine Figur
 			resetVariablenFuerNaechsteRunde();
 			this.stateMachine.setState(State.S.InitialState);
-		} else {
-			// Auf dem Feld sitzt eine andere Figur
-			// Verteidiger wird zwischengespeichert
+		} else { // Auf dem Feld sitzt eine andere Figur
+					// Verteidiger wird zwischengespeichert
 			for (Spieler verteidigerSpieler : spielerliste) {
 				for (Figur verteidiger : verteidigerSpieler.getFiguren()) {
 					if (verteidiger.getPosition() == aktuellesZiel) {
+						if (istAngetroffeneFigurEigene(verteidiger)) {
+							setFigurAufHeimatfeld(figur);
+							resetVariablenFuerNaechsteRunde();
+							this.stateMachine.setState(State.S.InitialState);
+							return;
+						}
 						this.verteidiger = verteidiger;
 						this.verteidigerSpieler = verteidigerSpieler;
 					}
@@ -180,11 +185,28 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		}
 	}
 
+	private boolean eineEigeneFigurAufStartfeld() {
+		int startfeld = aktuellerSpieler.getStartFeld();
+
+		for (Figur figur : aktuellerSpieler.getFiguren()) {
+			if (startfeld == figur.getPosition()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void berechneMoeglicheSchritte() {
 		// private Map<Figur, Integer> moeglicheSchritte;
 		berechneAnzahlFigurenAufHeimatsfeld();
-		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0) {
+
+		if (augenzahl == 6 && anzahlFigurenAufHeimatsfeld > 0 && !eineEigeneFigurAufStartfeld()) {
 			// dann setze die figur aufs startfeld
+
+			// wenn dein startfeld besetzt ist
+			// von einem anderen spieler, dann frage ihn etwas
+			// von einer eigenen figur, dann darfst du nicht ziehen,
+			// dafür darfst du aber mit einer figur, die draussen ist ziehen
 
 			for (Figur figur : aktuellerSpieler.getFiguren()) {
 				// wähle figur aus, die vom heimatfeld aufs startfeld soll
@@ -241,6 +263,15 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	private void setFigurAufStartfeld(Figur verteidiger) {
 		verteidiger.setPosition(verteidigerSpieler.getStartFeld());
 
+	}
+
+	private boolean istAngetroffeneFigurEigene(Figur testFigur) {
+		for (Figur figur : aktuellerSpieler.getFiguren()) {
+			if (testFigur == figur) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void berechneAnzahlFigurenAufHeimatsfeld() {
