@@ -51,10 +51,10 @@ public class ConsoleIOHandler implements Observer {
 				continue;
 			}
 
-			/*
-			 * if (str.matches(".*\\d+.*") && currentState == State.S.WurfState) {
-			 * this.model.throwCheatDice(Integer.parseInt(str)); continue; }
-			 */
+			if (str.matches(".*\\d+.*") && currentState == State.S.WurfState) {
+				this.model.zahlWuerfeln(Integer.parseInt(str));
+				continue;
+			}
 
 			if (str.equals("s") && currentState == State.S.InitialState) {
 				this.model.neueRundeStarten();

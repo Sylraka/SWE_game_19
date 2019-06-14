@@ -27,7 +27,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	private boolean einfacheVariante = false;
 
 	// für die Figur, wohin sie sich bewegen kann in diesem Zug, int = Endpunkt
-	private Map<Figur, Integer> moeglicheSchritte = new HashMap<Figur,Integer>();
+	private Map<Figur, Integer> moeglicheSchritte = new HashMap<Figur, Integer>();
 
 	public MakeMoveManagementImpl(StateMachinePort stPort, List<Spieler> spielerliste) {
 		this.stateMachine = stPort.stateMachine();
@@ -188,7 +188,7 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 					moeglicheSchritte.put(figur, aktuellerSpieler.getStartFeld());
 				}
 			}
-			
+
 			this.stateMachine.setState(State.S.WahlState);
 		} else { // augenzahl 1-5 oder alle figuren im spiel (keine auf heimatsfeld)
 			if (istEineFigurImSpiel()) {
@@ -274,25 +274,10 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 		return null;
 	}
 
-	// // TODO: delete, for debugging
-	// public void throwCheatDice(int cheatDice) {
-	// anzahlWuerfe++;
-	// augenzahl = cheatDice;
-	//
-	// if (hasMoves())
-	// this.stateMachine.setState(State.S.WahlState);
-	// // TODO Überprüfen, ob es richtig ist
-	// else if (anzahlWuerfe == 3) {
-	// this.stateMachine.setState(State.S.InitialState);
-	// resetVariablenFuerNaechsteRunde();
-	// } else {
-	// this.stateMachine.setState(State.S.WurfState);
-	// }
-	// }
-	//
-	// // TODO: delete, for debugging
-	// public Figur getFigureByField(int pos) {
-	// return this.figureByField.get(pos);
-	// }
-
+	// TODO: delete, for debugging
+	public void zahlWuerfeln(int augenzahl) {
+		anzahlWuerfe++;
+		this.augenzahl = augenzahl;
+		berechneMoeglicheSchritte();
+	}
 }

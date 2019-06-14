@@ -108,17 +108,11 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 	}
 
 	// TODO: delete, for debugging only
-	// @Override
-	// public void throwCheatDice(int cheatDice){
-	// if (!this.stateMachine.getState().isSubStateOf(State.S.WurfState))
-	// return;
-	// this.moveManager.throwCheatDice(cheatDice);
-	// }
-	//
-	// //TODO: delete, for debugging only
-	// @Override
-	// public Figur getFigureByField(int pos){
-	// return this.moveManager.getFigureByField(pos);
-	// }
+	@Override
+	public void zahlWuerfeln(int augenzahl) {
+		if (!this.stateMachine.getState().isSubStateOf(State.S.WurfState))
+			return;
+		this.moveManager.zahlWuerfeln(augenzahl);
+	}
 
 }

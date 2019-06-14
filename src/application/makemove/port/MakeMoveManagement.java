@@ -47,10 +47,7 @@ public interface MakeMoveManagement {
 
 	Spieler getGewinner();
 
-	// TODO: delete, for debugging
-	//void throwCheatDice(int cheatDice);
-
-	// TODO: delete, for debugging
-	//Figur getFigureByField(int pos);
+//	 TODO: delete, for debugging
+	void zahlWuerfeln(int augenzahl);
 
 }
