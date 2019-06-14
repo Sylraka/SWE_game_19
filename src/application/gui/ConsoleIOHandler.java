@@ -98,12 +98,12 @@ public class ConsoleIOHandler implements Observer {
 
 	private void printEingabemoeglichkeiten() {
 		if (this.model.getUebrigeAnzahlVersuche() == 3) {
-			System.out.println();
+			// System.out.println();
 			System.out.println("================================================");
 			System.out.println();
 		}
 		System.out.println(this.model.getAktuellerSpieler().getSpielerName() + " ist am Zug\n");
-		printFigurenPositionen();
+		// printFigurenPositionen();
 
 		if (this.model.getAugenzahl() > 0) {
 			System.out.println("Gewürfelte Zahl: " + this.model.getAugenzahl() + "\n");
@@ -114,12 +114,12 @@ public class ConsoleIOHandler implements Observer {
 		}
 
 		if (currentState == State.S.WurfState) {
+			printFigurenPositionen();
 			System.out.println("Verbleibende Versuche: " + (this.model.getUebrigeAnzahlVersuche()));
 			System.out.println("Zum Würfeln drücken Sie 'w'");
 		}
 
 		if (currentState == State.S.WahlState) {
-
 			printMoeglicheBewegungen();
 			System.out.format("\nGeben Sie die Nummer der zu bewegenden Figur ein.\n");
 		}
@@ -142,8 +142,8 @@ public class ConsoleIOHandler implements Observer {
 		System.out.println("Mögliche Bewegungen:");
 		for (Figur figur : spieler.getFiguren()) {
 			if (this.model.getMoeglicheSchritte().get(figur) != null) {
-				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1) + " von "
-						+ ((figur.getPosition() == -1) ? "Heimatsfeld" : ("Feld " + figur.getPosition())) + " auf Feld "
+				System.out.println("\t\t Figur " + (figur.getFigurNummer() + 1)
+						+ ((figur.getPosition() == -1) ? " vom Heimatsfeld" : (" von Feld" + figur.getPosition()))  +" auf Feld "
 						+ this.model.getMoeglicheSchritte().get(figur));
 			}
 		}

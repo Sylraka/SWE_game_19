@@ -47,8 +47,8 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 	@Override
 	public void wuerfeln() {
 		anzahlWuerfe++;
-		setCheatWuerfel(6);
-		// augenzahl = getRandomAugenzahl();
+		//setCheatWuerfel(6);
+		 augenzahl = getRandomAugenzahl();
 		berechneMoeglicheSchritte();
 	}
 
