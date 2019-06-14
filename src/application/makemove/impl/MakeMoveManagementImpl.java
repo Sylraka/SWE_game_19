@@ -89,7 +89,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
 
 	@Override
 	public void spielBeenden() {
-		System.out.println("Das ist das Ende des Spiels, ich hoffe es hat euch spaß gemacht!");
 		System.exit(0);
 	}
 

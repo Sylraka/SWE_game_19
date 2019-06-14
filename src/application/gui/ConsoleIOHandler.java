@@ -80,8 +80,12 @@ public class ConsoleIOHandler implements Observer {
 				continue;
 			}
 
-			if (str.matches("e") && currentState == State.S.EndGameState) {
+			// TODO: Im finalen Produkt sollte das nur im Zustand EndState funktionieren
+			// if (str.matches("e") && currentState == State.S.EndState) {
+			if (str.matches("e")) {
+				System.out.println("Das Spiel wurde beendet.\nVielen Dank fürs Spielen!");
 				this.model.spielBeenden();
+				System.out.println("Test");
 			}
 		}
 	}

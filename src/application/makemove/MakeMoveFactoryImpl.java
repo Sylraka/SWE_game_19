@@ -85,8 +85,8 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 
 	@Override
 	public void spielBeenden() {
-		if (!this.stateMachine.getState().isSubStateOf(State.S.EndGameState))
-			return;
+//		if (!this.stateMachine.getState().isSubStateOf(State.S.EndGameState))
+//			return;
 		this.moveManager.spielBeenden();
 	}
 
