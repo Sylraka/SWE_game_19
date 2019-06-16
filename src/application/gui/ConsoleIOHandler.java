@@ -37,6 +37,9 @@ public class ConsoleIOHandler implements Observer {
 	private void getEingabe() {
 		String str = new String();
 		BufferedReader in;
+
+		waehleVarianteDesSpieles();
+
 		while (true) {
 			printEingabemoeglichkeiten();
 			try {
@@ -85,7 +88,7 @@ public class ConsoleIOHandler implements Observer {
 				if (figurnummer > 0 && figurnummer < 4 && isBewegungErlaubt(figurnummer)) {
 					this.model.bewegeFigur(figurnummer);
 				} else {
-					System.err.println("Fehlerhafte Zahl! Bitte nochmal würfeln!\n");
+					System.err.println("Fehlerhafte Zahl! Bitte nochmal eine Figurnummer eingeben!\n");
 				}
 				continue;
 			}
@@ -146,6 +149,30 @@ public class ConsoleIOHandler implements Observer {
 		if (currentState == State.S.EndGameState) {
 			System.out.println("Winner: " + this.model.getGewinner().getSpielerName());
 			System.out.println("Drücke e zum Beenden des Spieles");
+		}
+	}
+
+	private void waehleVarianteDesSpieles() {
+		String str = new String();
+		BufferedReader in;
+
+		System.out.println("Soll einfache 'j' Variante gespielt werden? Wenn nicht drücken Sie 'n'.");
+
+		try {
+			in = new BufferedReader(new InputStreamReader(System.in));
+			str = in.readLine();
+		} catch (IOException e) {
+			System.out.println("EXCEPTION");
+		}
+
+		if (str.equals("j")) {
+			System.out.println("Die einfache Variante wurde ausgewählt.");
+			this.model.setEinfacheVariante(true);
+		}
+
+		if (str.equals("n")) {
+			System.out.println("Die schwierigere Variante wurde ausgewählt.");
+			this.model.setEinfacheVariante(false);
 		}
 	}
 

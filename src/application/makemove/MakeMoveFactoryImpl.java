@@ -119,4 +119,8 @@ public class MakeMoveFactoryImpl implements MakeMoveFactory, MakeMoveManagement,
 		this.moveManager.zahlWuerfeln(augenzahl);
 	}
 
+	@Override
+	public void setEinfacheVariante(boolean istEinfachVariante) {
+		this.moveManager.setEinfacheVariante(istEinfachVariante);
+	}
 }

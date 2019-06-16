@@ -26,6 +26,8 @@ public interface MakeMoveManagement {
 
 	boolean istEinfacheVariante();
 
+	void setEinfacheVariante(boolean istEinfacheVariante);
+
 	List<Spieler> getSpielerliste();
 
 	Spieler getAktuellerSpieler();
