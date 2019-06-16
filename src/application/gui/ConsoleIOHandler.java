@@ -157,23 +157,27 @@ public class ConsoleIOHandler implements Observer {
 		BufferedReader in;
 
 		System.out.println("Soll einfache 'j' Variante gespielt werden? Wenn nicht drücken Sie 'n'.");
+        while (true) {
+            try {
+                in = new BufferedReader(new InputStreamReader(System.in));
+                str = in.readLine();
+            } catch (IOException e) {
+                System.out.println("EXCEPTION");
+            }
 
-		try {
-			in = new BufferedReader(new InputStreamReader(System.in));
-			str = in.readLine();
-		} catch (IOException e) {
-			System.out.println("EXCEPTION");
-		}
+            if (str.equals("j")) {
+                System.out.println("Die einfache Variante wurde ausgewählt.");
+                this.model.setEinfacheVariante(true);
+                break;
+            }
 
-		if (str.equals("j")) {
-			System.out.println("Die einfache Variante wurde ausgewählt.");
-			this.model.setEinfacheVariante(true);
-		}
-
-		if (str.equals("n")) {
-			System.out.println("Die schwierigere Variante wurde ausgewählt.");
-			this.model.setEinfacheVariante(false);
-		}
+            if (str.equals("n")) {
+                System.out.println("Die schwierigere Variante wurde ausgewählt.");
+                this.model.setEinfacheVariante(false);
+                break;
+            }
+            System.out.println("Einfache Variante -> 'j' \nSchwierige Variante -> 'n'.");
+        }
 	}
 
 	public void update(State newState) {
