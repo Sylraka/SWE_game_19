@@ -72,12 +72,6 @@ public class MakeMoveManagementImpl implements MakeMoveManagement {
             for (Spieler verteidigerSpieler : spielerliste) {
                 for (Figur verteidiger : verteidigerSpieler.getFiguren()) {
                     if (verteidiger.getPosition() == aktuellesZiel) {
-                        if (istAngetroffeneFigurEigene(verteidiger)) {
-                            setFigurAufHeimatfeld(figur);
-                            resetVariablenFuerNaechsteRunde();
-                            this.stateMachine.setState(State.S.InitialState);
-                            return;
-                        }
                         this.verteidiger = verteidiger;
                         this.verteidigerSpieler = verteidigerSpieler;
                     }
